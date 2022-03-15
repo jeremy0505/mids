@@ -1,5 +1,11 @@
 use mids;
 
+--
+-- script to drop all MIDS tables *plus* the "users" table which we create 
+-- with additional attributes
+--
+
+drop table if exists stage_categories, stage_item_types, stage_room_types, stage_suggested_items;
 
 drop table if exists user_account_access;
 drop table if exists accounts;
