@@ -1,0 +1,19 @@
+name,system_or_user,system_type,user_type,phys_or_digi
+White Goods,SYS,APPLIANCE,,PHYSICAL
+Audio/Visual,SYS,AUDIO_VISUAL,,PHYSICAL
+Bank,SYS,BANK,,DIGITAL
+Communications,SYS,COMMUNICATIONS,,DIGITAL
+Computer,SYS,COMPUTE,,PHYSICAL
+Credit,SYS,CREDIT,,DIGITAL
+Furniture,SYS,FURNITURE,,PHYSICAL
+Garden Furniture,SYS,GARDEN_FURNITURE,,PHYSICAL
+Garden Machinery,SYS,GARDEN_MACHINERY,,PHYSICAL
+Insurance,SYS,INSURANCE,,DIGITAL
+Investment,SYS,INVESTMENT,,DIGITAL
+Leisure,SYS,LEISURE,,PHYSICAL
+Car / Motorcycle / Quad,SYS,MOTOR,,PHYSICAL
+Other / non-categorised,SYS,OTHER,,PHYSICAL
+Subscriptions (digital),SYS,SUBS_DIGITAL,,DIGITAL
+Subscriptions (physical),SYS,SUBS_PHYSICAL,,PHYSICAL
+Tools,SYS,TOOLS,,PHYSICAL
+Warranties,SYS,WARRANTY,,DIGITAL
