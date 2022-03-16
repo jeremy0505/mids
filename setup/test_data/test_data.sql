@@ -17,13 +17,13 @@ values
 -- users - note the ability to insert multiple rows with just a single insert statement
 --
 
-insert into mids_users
-(user_id, client_id,username,email, secondary_email,mobile,first_name,last_name,postal_code,country,lang,currency,year_of_birth)
+insert into users
+(id, client_id,email, secondary_email,password, mobile,first_name,last_name,postal_code,country,lang,currency,year_of_birth)
 values
-(1, 0,'asmith','asmith@example.com','asmith2@example.com', '07770 123456','Alice','Smith','GU51 4HG','UK','EN','GBP', 1968),
-(2, 0, 'bjones','bjones@example.com','bjones2@example.com', '07770 234567','Bobby','Jones','GU22 8RL','UK','EN','GBP', 1966),
-(3, 0, 'cgreen','cgreen@example.com','cgreen2@example.com', '07770 987654','Carla','Green','KT15 3NA','UK','EN','GBP', 1971),
-(4, 0, 'dwhite','dwhite@example.com','dwhite2@example.com', '07123 565656','Douglas','White','GU13 0LJ','UK','EN','GBP', 1967)
+(1, 0,'asmith@example.com','asmith2@example.com', 'xxxxxxxx', '07770 123456','Alice','Smith','GU51 4HG','UK','EN','GBP', 1968),
+(2, 0,'bjones@example.com','bjones2@example.com', 'xxxxxxxx', '07770 234567','Bobby','Jones','GU22 8RL','UK','EN','GBP', 1966),
+(3, 0,'cgreen@example.com','cgreen2@example.com', 'xxxxxxxx', '07770 987654','Carla','Green','KT15 3NA','UK','EN','GBP', 1971),
+(4, 0,'dwhite@example.com','dwhite2@example.com', 'xxxxxxxx', '07123 565656','Douglas','White','GU13 0LJ','UK','EN','GBP', 1967)
 ;
 
 

@@ -109,7 +109,7 @@ SHOW WARNINGS;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mids`.`users` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `client_id` BIGINT UNSIGNED NOT NULL,
+  `client_id` BIGINT UNSIGNED NOT NULL DEFAULT 0,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `email_verified_at` TIMESTAMP NULL DEFAULT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `mids`.`users` (
   `address2` VARCHAR(240) NULL DEFAULT NULL,
   `city` VARCHAR(240) NULL DEFAULT NULL,
   `county` VARCHAR(240) NULL DEFAULT NULL,
-  `country` VARCHAR(2) NOT NULL COMMENT 'Lookup of ISO country code - 2-char version\n\n',
+  `country` VARCHAR(2) NULL COMMENT 'Lookup of ISO country code - 2-char version\n\n',
   `lang` VARCHAR(10) NULL DEFAULT 'EN',
   `currency` VARCHAR(10) NULL DEFAULT 'GBP',
   `freq_data_copy2cloud_days` INT NULL DEFAULT NULL,

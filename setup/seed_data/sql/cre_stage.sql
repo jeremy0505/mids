@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS stage_suggested_items (
 ENGINE = InnoDB;
 
 
-LOAD DATA INFILE '~/code/seed_data/data/room_types.csv' 
+LOAD DATA INFILE '~/code/mids/setup/seed_data/data/room_types.csv' 
 INTO TABLE stage_room_types 
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
@@ -72,14 +72,14 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 
-LOAD DATA INFILE '~/code/seed_data/data/categories.csv' 
+LOAD DATA INFILE '~/code/mids/setup/seed_data/data/categories.csv' 
 INTO TABLE stage_categories 
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE '~/code/seed_data/data/item_types.csv' 
+LOAD DATA INFILE '~/code/mids/setup/seed_data/data/item_types.csv' 
 IGNORE
 INTO TABLE stage_item_types
 FIELDS TERMINATED BY ',' 
@@ -88,7 +88,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 
-LOAD DATA INFILE '~/code/seed_data/data/suggested_items.csv' 
+LOAD DATA INFILE '~/code/mids/setup/seed_data/data/suggested_items.csv' 
 IGNORE
 INTO TABLE stage_suggested_items
 FIELDS TERMINATED BY ',' 
@@ -168,8 +168,8 @@ INSERT INTO
   )
 select
   null,
-  (select category_id fromcategories tc where tc.system_or_user = 'SYS' and tc.system_type = stage.category),
-  (select room_type_id fromroom_types trt where trt.code = stage.dflt_room_code),
+  (select category_id from categories tc where tc.system_or_user = 'SYS' and tc.system_type = stage.category),
+  (select room_type_id from room_types trt where trt.code = stage.dflt_room_code),
   0,
   name,
   code,
@@ -213,7 +213,7 @@ INSERT INTO suggested_items
 client_id,
 name,relevant_country)
 select 
-(select tit.item_type_id fromitem_types tit where tit.code = ssi.item_type_code),
+(select tit.item_type_id from item_types tit where tit.code = ssi.item_type_code),
 0,
 ssi.name,
 ssi.relevant_country
