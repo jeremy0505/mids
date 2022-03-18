@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Plan;
-use App\Models\ItemType;
 
-class HomeController extends Controller
+
+class PlansController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,12 +23,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function fn_plan()
     {
-        // return view('home');
 
-
-        return view('home', ['plans' =>  Plan::all(),
-                             'itemtypes' => ItemType::all()]);      
+        return view('plans', ['plans' =>  Plan::all()]);
+        //return view('plans');
     }
 }

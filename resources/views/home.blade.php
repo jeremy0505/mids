@@ -20,4 +20,19 @@
         </div>
     </div>
 </div>
+
+<div>
+<!-- show number of items in the database 
+Perhaps we pass into this blade the object (i.e. would be items but we'll send plans in 
+as we have a model for that already)
+-->
+
+<p>
+Database contains {{$plans->count();}} plans.
+<br>
+Database contains {{$itemtypes->count();}} item types.
+</p>
+
+
+</div>
 @endsection

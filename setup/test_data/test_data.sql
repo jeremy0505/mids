@@ -90,7 +90,7 @@ VALUES
 --
 -- user plans - with copies of terms as at time of contract
 
-INSERT INTO mids_user_plans
+INSERT INTO user_plans
 (user_id,
 plan_id,
 client_id,

@@ -608,9 +608,9 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mids`.`mids_user_plans`
+-- Table `mids`.`user_plans`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mids`.`mids_user_plans` (
+CREATE TABLE IF NOT EXISTS `mids`.`user_plans` (
   `user_plan_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED NOT NULL,
   `plan_id` BIGINT UNSIGNED NOT NULL,
