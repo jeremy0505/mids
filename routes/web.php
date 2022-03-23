@@ -39,6 +39,9 @@ Route::get('/dev_get_plans', function (Plan $plan) {
 Route::view('/dev_view_plans', 'plans', ['plans' => Plan::all()]);
 
 
+Route::view('/mids_home', 'mids_home', ['plans' => Plan::all()]);
+
+
 //---------------------------------
 // examples / test routes
 

@@ -27,11 +27,11 @@ Perhaps we pass into this blade the object (i.e. would be items but we'll send p
 as we have a model for that already)
 -->
 
-<p>
+<!-- <p>
 Database contains {{$plans->count();}} plans.
 <br>
 Database contains {{$itemtypes->count();}} item types.
-</p>
+</p> -->
 
 
 </div>

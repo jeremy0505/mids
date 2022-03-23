@@ -28,7 +28,7 @@ class HomeController extends Controller
         // return view('home');
 
 
-        return view('home', ['plans' =>  Plan::all(),
+        return view('mids_home', ['plans' =>  Plan::all(),
                              'itemtypes' => ItemType::all()]);      
     }
 }
