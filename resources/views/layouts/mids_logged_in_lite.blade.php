@@ -21,9 +21,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- MIDS-specific -->
+    <!-- MIDS-specific -->
     <link href="{{ asset('css/mids_base.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/mids_logged_out.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/mids_logged_in.css') }}" rel="stylesheet">
 
 
 </head>
@@ -95,7 +95,7 @@
 
     </div>
 
-    <div class="container-fluid footer position-absolute bottom-0 start-0 full-width">
+    <div class="container-fluid border background bg-black footer position-absolute bottom-0 start-0 full-width">
             <p class="float-end"> Copyright (c) 2022 - MiDigitalSafe | <a href="#" class="footer-a">Terms of use</a> | <a href="#" class="footer-a">Privacy policy</a></p>
         </div>
 

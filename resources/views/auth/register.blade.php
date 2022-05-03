@@ -68,7 +68,7 @@
                             <div class="col-md-6">
 
 
-                                <select name="plan_id">
+                                <select name="plan_id" required>
 
 
                                     <option value="" selected="selected">Select a plan</option>

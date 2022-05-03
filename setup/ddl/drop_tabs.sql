@@ -15,7 +15,7 @@ drop table if exists emails;
 drop table if exists inbound_email_attachments;
 drop table if exists inbound_emails;
 drop table if exists login_attempts;
-drop table if exists mids_user_plans;
+drop table if exists user_plans;
 drop table if exists my_item_docs;
 drop table if exists my_item_extra_fields;
 drop table if exists my_items;
@@ -40,3 +40,9 @@ drop table if exists mids_users;
 drop table if exists categories;
 drop table if exists room_types;
 drop table if exists clients;
+
+
+
+drop view if exists v_my_items;
+drop view if exists v_my_property_rooms;
+

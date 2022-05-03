@@ -1,0 +1,37 @@
+/* MIDS-specific CSS for users who are not logged in*/
+
+
+
+:root {
+    --mids-body-bg: #79c3bf;
+}
+
+
+body {
+
+    background-image: url('/img/london_1.jpg');
+    background-size: cover;
+    /* position: fixed;  */
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+}
+
+.footer {
+    border-radius: 0px;
+
+    /* margin: 10px; */
+    /* padding: 10px; */
+
+    /* background-color: darkslategrey; */
+    color: rgb(255, 255, 255);
+
+
+
+}
+.footer-a, .footer-a:link {
+    color: white;
+    text-decoration: none;
+
+    
+  }

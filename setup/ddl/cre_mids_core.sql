@@ -277,10 +277,6 @@ CREATE TABLE IF NOT EXISTS `mids`.`item_types` (
   `val_now_eff_date_label` VARCHAR(80) NULL,
   `show_val_basis` VARCHAR(1) NULL,
   `val_basis_label` VARCHAR(80) NULL,
-  `show_val_ins_purposes` VARCHAR(1) NULL,
-  `val_ins_purposes_label` VARCHAR(80) NULL,
-  `show_val_ins_purposes_date` VARCHAR(1) NULL,
-  `val_ins_purposes_date_label` VARCHAR(80) NULL,
   `show_contact_phone` VARCHAR(1) NULL,
   `contact_phone_label` VARCHAR(80) NULL,
   `cre_date` DATETIME NOT NULL DEFAULT now(),
@@ -421,6 +417,7 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   `item_type_id` BIGINT UNSIGNED NOT NULL,
   `user_id` BIGINT UNSIGNED NOT NULL,
   `my_property_id` BIGINT UNSIGNED NOT NULL,
+  `my_property_room_id` BIGINT UNSIGNED NULL,
   `client_id` BIGINT UNSIGNED NOT NULL,
   `version` INT NOT NULL COMMENT 'Record version number - starting at 1 - increments on each “date effective update”\n',
   `date_effective_from` DATE NOT NULL,
@@ -438,8 +435,6 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   `val_now` INT NULL,
   `val_now_eff_date` DATE NULL,
   `val_basis` VARCHAR(30) NULL,
-  `val_ins_purposes` INT NULL,
-  `val_ins_purposes_date` DATE NULL,
   `contact_phone` VARCHAR(45) NULL,
   `comments` LONGTEXT NULL DEFAULT NULL,
   `status` VARCHAR(30) NOT NULL COMMENT 'ACTIVE\\nEXPIRED\\nDISPOSED\\n\n\nThis may not be required.',
@@ -453,6 +448,7 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   INDEX `fk_t_my_items_t_my_property_rooms1_idx` (`property_room_id` ASC) VISIBLE,
   INDEX `fk_t_my_items_t_mids_users1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_t_my_items_t_my_properties1_idx` (`my_property_id` ASC) VISIBLE,
+  INDEX `fk_my_items_my_property_rooms1_idx` (`my_property_room_id` ASC) VISIBLE,
   CONSTRAINT `fk_t_my_items_t_master_item_types1`
     FOREIGN KEY (`item_type_id`)
     REFERENCES `mids`.`item_types` (`item_type_id`),
@@ -465,6 +461,11 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   CONSTRAINT `fk_t_my_items_t_my_properties1`
     FOREIGN KEY (`my_property_id`)
     REFERENCES `mids`.`my_properties` (`my_property_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_my_items_my_property_rooms1`
+    FOREIGN KEY (`my_property_room_id`)
+    REFERENCES `mids`.`my_property_rooms` (`property_room_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -852,10 +853,6 @@ CREATE TABLE IF NOT EXISTS `mids`.`stage_item_types` (
   `val_now_eff_date_label` VARCHAR(80) NULL,
   `show_val_basis` VARCHAR(1) NULL,
   `val_basis_label` VARCHAR(80) NULL,
-  `show_val_ins_purposes` VARCHAR(1) NULL,
-  `val_ins_purposes_label` VARCHAR(80) NULL,
-  `show_val_ins_purposes_date` VARCHAR(1) NULL,
-  `val_ins_purposes_date_label` VARCHAR(80) NULL,
   `show_contact_phone` VARCHAR(1) NULL,
   `contact_phone_label` VARCHAR(80) NULL)
 ENGINE = InnoDB;
@@ -984,7 +981,7 @@ USE `mids` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `mids`.`v_my_items`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `model_name` INT, `mfr` INT, `serial_number` INT, `purch_date` INT, `start_date` INT, `expiry_date` INT, `price_paid` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `val_ins_purposes` INT, `val_ins_purposes_date` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT);
+CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `model_name` INT, `mfr` INT, `serial_number` INT, `purch_date` INT, `start_date` INT, `expiry_date` INT, `price_paid` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT, `access_mode` INT);
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
@@ -999,9 +996,39 @@ SHOW WARNINGS;
 DROP TABLE IF EXISTS `mids`.`v_my_items`;
 SHOW WARNINGS;
 USE `mids`;
-CREATE  OR REPLACE VIEW `v_my_items` AS 
-select * 
-from my_items tmi
+CREATE or replace VIEW `v_my_items` AS 
+select my_item_id,
+    item_type_id,
+    user_id,
+    my_property_id,
+    client_id,
+    version,
+    date_effective_from,
+    date_effective_to,
+    insured_by_my_item_id,
+    name,
+    qty,
+    model_name,
+    mfr,
+    serial_number,
+    purch_date,
+    start_date,
+    expiry_date,
+    price_paid,
+    val_now,
+    val_now_eff_date,
+    val_basis,
+    contact_phone,
+    comments,
+    status,
+    property_room_id,
+    num_days_pre_exp_notifs,
+    cre_date,
+    cre_user_id,
+    upd_date,
+    upd_user_id,
+    'FULL' access_mode
+from my_items mi
 where date_effective_to is null;
 SHOW WARNINGS;
 

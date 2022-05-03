@@ -1,0 +1,25 @@
+/* MIDS-specific CSS */
+
+
+:root {
+    --mids-body-bg: #79c3bf;
+}
+
+.footer {
+    border-radius: 0px;
+
+    /* margin: 10px; */
+    /* padding: 10px; */
+
+    /* background-color: darkslategrey; */
+    color: rgb(255, 255, 255);
+
+
+
+}
+.footer-a, .footer-a:link {
+    color: white;
+    text-decoration: none;
+
+    
+  }

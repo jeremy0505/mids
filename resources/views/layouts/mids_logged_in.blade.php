@@ -1,203 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>title...</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- MIDS-specific -->
+    <!-- MIDS-specific -->
+    <link href="{{ asset('css/mids_base.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/mids_logged_in.css') }}" rel="stylesheet">
+
+
 </head>
-
-<!-- Local styles -->
-<style>
-    p {
-        font-family: Nunito;
-    }
-
-    #outline {
-        border: 1px solid lightgrey;
-        margin: 10px;
-        padding: 10px;
-    }
-
-    .header {
-        border-radius: 10px;
-
-        margin: 10px;
-        padding: 10px;
-
-        border: 1px solid palegoldenrod;
-        height: 60px;
-
-        background-color: #ebf2d5;
-    }
-
-    .headerleft {
-
-        float: left;
-    }
-
-
-    #userstat {
-        float: right;
-        vertical-align: middle;
-    }
-
-    .crumb {
-        border-radius: 10px;
-        width: 90%;
-
-        margin: 10px;
-        padding: 10px;
-
-        /* border: 1px solid grey; */
-        height: auto;
-    }
-
-    .context {
-        border-radius: 10px;
-
-        margin: 10px;
-        padding: 10px;
-
-        border: 1px solid green;
-        height: 150;
-    }
-
-    .maincontent {
-        border-radius: 10px;
-
-        margin: 10px;
-        padding: 10px;
-
-        border: 1px solid orange;
-        /* height: auto; */
-        overflow: auto;
-
-    }
-
-    #topleft {
-
-   float: left;
-        width: 48%;
-
-        min-height: 250px;
-
-
-        border: 1px solid black;
-
-    }
-
-    #topright {
-
-        float: right;
-        width: 48%;
-        min-height: 250px;
-
-        border: 1px solid black;
-
-    }
-
-    .footer {
-        border-radius: 5px;
-
-        /* margin: 10px; */
-        padding: 10px;
-
-        background-color: darkslategrey;
-        color: white;
-
-
-    }
-
-    .footer a:link {
-        color: white
-    }
-
-    .bignum{
-        font-size:4rem;
-    }
-</style>
 
 <body>
 
-    <div id="outline">
-        <div class="header">
-            <div class="headerleft">
-                <p>MiDigitalSafe</p>
-            </div>
-            <div id="userstat">
 
-                @auth
-                <span class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
-                    </a>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
+
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                        @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @endif
+
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @endif
+                        @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
+                                    {{ __('Logout') }}
+                                </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </span>
-                @endauth
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
+        <br>
+        <div class="container">
+            <div class="row">
+                <div id="crumb" class="col">
+                    Home / here
+                </div>
+
+                <div id="search" class="col">
+                    Search field here
+                </div>
             </div>
         </div>
 
-        <div class="crumb">
-            <p>crumbtrail</p>
-        </div>
+        <main class="py-4">
 
-        <div class="context">
-            <p>context</p>
+            @yield('content')
 
-        </div>
-
-        <div class="maincontent">
-            <p>maincontent area</p>
-            <main>
-                <div id="topleft">
-                @yield('topleft')
-                </div>
-                <div id="topright">
-      
-                </div>
-
-
-
-
-            </main>
-        </div>
-
-
-
-
-
-        <div class="footer">
-            <p>Copyright (c) 2022 - MiDigitalSafe | <a href="#">Terms of use</a> | <a href="#">Privacy policy</a></p>
-        </div>
+        </main>
 
     </div>
+
+    <div class="container-fluid border background bg-black footer position-absolute bottom-0 start-0 full-width">
+        <p class="float-end"> Copyright (c) 2022 - MiDigitalSafe | <a href="#" class="footer-a">Terms of use</a> | <a href="#" class="footer-a">Privacy policy</a></p>
+    </div>
+
 </body>
 
 </html>

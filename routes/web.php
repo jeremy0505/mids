@@ -22,6 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/login_check', [App\Http\Controllers\HomeController::class, 'login_check'])->name('home');
+Route::get('/prop_wizard', [App\Http\Controllers\HomeController::class, 'prop_wizard'])->name('prop_wizard');
 Route::get('/dev_auth_get_plans', [App\Http\Controllers\PlansController::class, 'fn_plan'])->name('plans');
 
 

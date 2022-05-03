@@ -48,10 +48,6 @@ CREATE TABLE IF NOT EXISTS stage_item_types (
   val_now_eff_date_label VARCHAR(80) NULL,
   show_val_basis VARCHAR(1) NULL,
   val_basis_label VARCHAR(80) NULL,
-  show_val_ins_purposes VARCHAR(1) NULL,
-  val_ins_purposes_label VARCHAR(80) NULL,
-  show_val_ins_purposes_date VARCHAR(1) NULL,
-  val_ins_purposes_date_label VARCHAR(80) NULL,
   show_contact_phone VARCHAR(1) NULL,
   contact_phone_label VARCHAR(80) NULL)
 ENGINE = InnoDB;
@@ -159,10 +155,6 @@ INSERT INTO
     val_now_eff_date_label,
     show_val_basis,
     val_basis_label,
-    show_val_ins_purposes,
-    val_ins_purposes_label,
-    show_val_ins_purposes_date,
-    val_ins_purposes_date_label,
     show_contact_phone,
     contact_phone_label
   )
@@ -197,10 +189,6 @@ select
   val_now_eff_date_label,
   show_val_basis,
   val_basis_label,
-  show_val_ins_purposes,
-  val_ins_purposes_label,
-  show_val_ins_purposes_date,
-  val_ins_purposes_date_label,
   show_contact_phone,
   contact_phone_label
 from

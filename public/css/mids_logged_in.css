@@ -1,0 +1,16 @@
+/* MIDS-specific CSS for users logged-in*/
+
+
+
+:root {
+    --mids-body-bg: #9abfbd;
+    --info-panel-bg: rgba(193, 244, 184, 0.735);
+}
+
+body {
+
+    /* background-color: var(--mids-body-bg); */
+    background-color: white;
+}
+
+
