@@ -69,6 +69,12 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="/wizmaster/{{session('g_my_property_id')}}">
+                                    Wizard Master
+                                </a>
+
+
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -89,15 +95,28 @@
 
         <main class="py-4">
 
-                @yield('content')
+            @if ($errors->any())
+
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+
+
+            @yield('content')
 
         </main>
 
     </div>
 
-    <div class="container-fluid border background bg-black footer position-absolute bottom-0 start-0 full-width">
-            <p class="float-end"> Copyright (c) 2022 - MiDigitalSafe | <a href="#" class="footer-a">Terms of use</a> | <a href="#" class="footer-a">Privacy policy</a></p>
-        </div>
+    <!-- <div class="container-fluid border background bg-black footer position-absolute bottom-0 start-0 full-width">
+        <p class="float-end"> Copyright (c) 2022 - MiDigitalSafe | <a href="#" class="footer-a">Terms of use</a> | <a href="#" class="footer-a">Privacy policy</a></p>
+    </div> -->
 
 </body>
 

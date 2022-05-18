@@ -1,16 +1,16 @@
-Code,Name
-BED,Bedroom
-HALL,Hall
-KITCHEN,Kitchen
-LIVING,Living room
-DINING,Dining room
-BREAKFAST,Breakfast room
-UTILITY,Utiity room
-STUDY,Study / Home Office
-BATH,Bathroom
-WC,WC
-BOILER,Boiler room
-DRESSING,Dressing room
-GARAGE,Garage
-SHED,Shed or other outside buidlings
-GROUNDS,"Outside (driveway, garden)"
+Code,Name,Seq
+BED,Bedroom,70
+HALL,Hall,10
+KITCHEN,Kitchen,30
+LIVING,Living room,20
+DINING,Dining room,40
+BREAKFAST,Breakfast room,35
+UTILITY,Utiity room,45
+STUDY,Study / Home Office,90
+BATH,Bathroom,60
+WC,WC,50
+BOILER,Boiler room,48
+DRESSING,Dressing room,80
+GARAGE,Garage,100
+SHED,Shed or other outside buidlings,110
+GROUNDS,"Outside (driveway, garden)",120

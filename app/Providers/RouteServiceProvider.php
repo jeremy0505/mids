@@ -18,6 +18,15 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/home';
+
+    /**
+     * The path to the "login check" - this is where it decides
+     * what specific actions to take when a user logs in (for
+     * example not showing the dashboard initially for new users)
+     *
+     *
+     * @var string
+     */
     public const LOGIN_CHECK = '/login_check';
 
     /**

@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Plan;
 use App\Models\ItemType;
+use App\Models\MyProperty;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
+
 
 
 class HomeController extends Controller
@@ -33,22 +37,35 @@ class HomeController extends Controller
         // get number of properties for this user
 
 
-        $numprops = DB::table('my_properties')
-            ->select('my_property_id')
-            ->where('user_id', auth()->user()->id)
-            ->get()->count();
 
 
+        $props = MyProperty::where('user_id', auth()->user()->id)->get();       
 
+         
         // dd($props, auth()->user()->id, 'hello');
 
-        if ($numprops === 0)
+        Log::info('Checking property details for user .', ['id' => auth()->user()->id]);
+        Log::info('#properties = ' . $props->count());
+
+
+        if ($props->count() === 0)
+        
             return view('mids_no_props_yet');
-        else
+
+        elseif ($props->count() === 1){
+            
+            Session::put('g_my_property_id',$props->first()->my_property_id);
+
+            Log::info('g_my_property_id = ' . $props->first()->my_property_id);
+
             return view('mids_home', [
                 'plans' =>  Plan::all(),
                 'itemtypes' => ItemType::all()
             ]);
+        }
+        else
+          dd("user has more than 1 property - code yet to be built!");
+
     }
     public function index()
     {
@@ -56,9 +73,4 @@ class HomeController extends Controller
           return view('mids_home');
     }    
     
-    public function prop_wizard()
-    {
-  
-          return view('mids_prop_wizard');
-    }
 }

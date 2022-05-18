@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="container-fluid">
-                        <div class="float-left"><a href="prop_wizard" class="btn btn-dark">Continue with wizard</a>
+                        <div class="float-left"><a href="/prop_wizard" class="btn btn-dark">Continue with wizard</a>
                         <div class="float-end"><a href="/home" class="btn btn-warning">Continue to dashboard</a>
                     </div>
                 </div>

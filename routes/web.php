@@ -1,8 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Plan;
+use App\Models\MyPropertyRoom;
+
+
+//
+// trace all DB queries
+//
+use Illuminate\Support\Facades\Route;
+DB::listen(function ($query)
+{
+    logger($query->sql,$query->bindings); });
+//
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +34,50 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/login_check', [App\Http\Controllers\HomeController::class, 'login_check'])->name('home');
-Route::get('/prop_wizard', [App\Http\Controllers\HomeController::class, 'prop_wizard'])->name('prop_wizard');
-Route::get('/dev_auth_get_plans', [App\Http\Controllers\PlansController::class, 'fn_plan'])->name('plans');
+Route::get('/home', 
+           [App\Http\Controllers\HomeController::class,
+           'index'])->name('home');
+
+Route::get('/login_check', 
+           [App\Http\Controllers\HomeController::class, 
+           'login_check'])->name('home');
+
+Route::get('/prop_wizard',        
+        [App\Http\Controllers\PropertyController::class, 
+        'prop_wiz1'])->name('prop_wizard');
+
+
+Route::put('/storeproperty', 
+        [App\Http\Controllers\PropertyController::class, 
+        'prop_wiz1_db'])->name('prwiz1');
+
+Route::put('/storenumrooms', 
+        [App\Http\Controllers\PropertyController::class, 
+        'prop_wiz2_db'])->name('prwiz2',);
+
+Route::put('/storeroomnames', 
+        [App\Http\Controllers\PropertyController::class, 
+        'prop_wiz3_db'])->name('prwiz3',);
+
+
+Route::put('/storeroomitems', 
+        [App\Http\Controllers\PropertyController::class, 
+        'prop_wiz4_db'])->name('prwiz4',);
+
+
+Route::get('/roomwiz/{id}', function ($property_room_id) {
+            return view('mids_prop_wiz4',
+                        ['rmid' => $property_room_id]);
+        });
+
+
+Route::get('/wizmaster/{id}', function ($property_id) {
+            return view('mids_prop_wiz_room_master',['property_id',session('g_my_property_id')]);
+            // pass in rooms and #items in each room
+                       // ['property_id',$rooms = MyPropertyRoom::all()->where('my_property_id', session('g_my_property_id'));
+            //);
+        });
+
 
 
 

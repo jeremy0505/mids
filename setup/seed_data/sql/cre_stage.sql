@@ -7,7 +7,8 @@ drop table if exists stage_suggested_items;
 
 CREATE TABLE IF NOT EXISTS stage_room_types (
   code VARCHAR(30) NOT NULL,
-  name VARCHAR(80) NOT NULL)
+  name VARCHAR(80) NOT NULL,
+  seq  int)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS stage_categories (
@@ -95,8 +96,8 @@ IGNORE 1 ROWS;
 show warnings;
 
 -- room types
-insert into room_types (client_id, code, name)
-select 0, code,name
+insert into room_types (client_id, code, name,seq)
+select 0, code,name,seq
 from stage_room_types;
 
 
