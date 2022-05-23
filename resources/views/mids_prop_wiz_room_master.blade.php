@@ -78,8 +78,8 @@ information in each one. Each tile is itself a link into the room items wizard.
 
                                 <div class="card-body background bg-light">
                                     <h5 class="card-title">{{$room->room_name}}</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <p class="card-text">{{$num_items}} items defined</p>
+                                    <a href="/roomwiz/{{$room->property_room_id}}" class="btn btn-primary">Go to {{$room->room_name}}</a>
                                 </div>
 
 
