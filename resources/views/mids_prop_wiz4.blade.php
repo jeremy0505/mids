@@ -114,6 +114,7 @@ the user is asked to specify how many of each they have
                 </div>
                 <div class="card-footer">
 
+                    @if (session('g_wizard_mode'=='Y'))
                     <div class="dropdown align-content-end">
                         <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Room selector
@@ -130,7 +131,7 @@ the user is asked to specify how many of each they have
 
 
                     </div>
-
+                    @endif
 
                     <form method="POST" action="/storeroomitems">
                         @csrf
@@ -140,6 +141,7 @@ the user is asked to specify how many of each they have
 
                         <input type="hidden" name="property_room_id" value="{{ $rmid}}">
                         <input type="hidden" name="property_room_id_next" value="{{ $property_room_id_next}}">
+                        <input type="hidden" name="wizard_mode" value="{{ session('g_wizard_mode') }}">
 
 
                         <!-- Need to display now each of the items and allow quantity to be entered -->
@@ -170,13 +172,14 @@ the user is asked to specify how many of each they have
 
 
                             <div class="col-sm-4">
-                                <input type="" name="comments[]" class="form-control" id="{{ trim($room->property_room_id)}}" placeholder="Add comments">
+                                <input type="" name="comments[]" class="form-control" id="{{ trim($item->item_type_id)}}" placeholder="Add comments">
                             </div>
                         </div>
 
 
                         @endforeach
                         <p></p>
+          
                         @if (session('g_wizard_mode') == 'Y')
                         <button type="submit" class="btn btn-primary mb-3">Save & next room...</button>
                         @else

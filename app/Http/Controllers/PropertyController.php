@@ -316,7 +316,6 @@ class PropertyController extends Controller
                     'status' => 'ACTIVE'
 
                 ]);
-
             }
 
             $i++;
@@ -327,22 +326,21 @@ class PropertyController extends Controller
 
         //dd("next=" . $data['property_room_id_next']);
 
-        if ($data['property_room_id_next'] == 0) {
+        if ($data['wizard_mode'] != 'Y' or $data['property_room_id_next'] == 0) {
 
-            Session::put('g_wizard_mode','N');
+
+
+            Session::put('g_wizard_mode', 'N');
 
             return view(
                 'mids_prop_wiz_room_master',
                 ['rmid' => session('g_my_property_id')]
             );
-
-        }
+        } 
+        
         else
 
-            // return view('mids_prop_wiz_room_master',['property_id',session('g_my_property_id')]);
-
-
-            //        /roomwiz/{{$room->property_room_id}}
+            // take user to next room
             return view(
                 'mids_prop_wiz4',
                 ['rmid' => $data['property_room_id_next']]
