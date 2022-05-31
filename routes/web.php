@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Plan;
 use App\Models\MyPropertyRoom;
+use Illuminate\Support\Facades\Log;
 
 
 //
@@ -27,6 +28,10 @@ DB::listen(function ($query)
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Log::info('');
+Log::info('');
+Log::info('START --------------------------------------------------------------------------------------------------------');
 
 Route::get('/', function () {
     return view('welcome');
@@ -80,6 +85,12 @@ Route::get('/wizmaster/{id}', function ($property_id) {
 
 
 
+
+// route to test "powergrid"
+
+
+
+Route::view('/powergrid', 'powergrid-demo');
 
 // this route is to show details of all "plans""
 //

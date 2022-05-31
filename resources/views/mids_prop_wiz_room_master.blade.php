@@ -63,8 +63,8 @@ information in each one. Each tile is itself a link into the room items wizard.
 
                         @foreach ($rooms as $room)
                         <?php
-                        
-                        $i = $i+1;
+
+                        $i = $i + 1;
 
 
                         $num_items = 0;
@@ -75,7 +75,6 @@ information in each one. Each tile is itself a link into the room items wizard.
 
                         <div class="col">
                             <div class="card">
-
                                 <div class="card-body background bg-light">
                                     <h5 class="card-title">{{$room->room_name}}</h5>
                                     <p class="card-text">{{$num_items}} items defined</p>
@@ -88,12 +87,12 @@ information in each one. Each tile is itself a link into the room items wizard.
                         </div>
 
                         <?php
-                   
+
 
                         // end the row div whenever the count is divisible by 3 exactly - using modulus
                         if ($i % 3 == 0)
-                          echo '</div> <div class="row">';
-                        
+                            echo '</div> <div class="row">';
+
                         ?>
                         @endforeach
 

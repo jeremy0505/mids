@@ -1,3 +1,14 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+
+Session::put('g_wizard_mode','Y');
+
+
+?>
+
+
+
 @extends('layouts.mids_logged_in_lite')
 
 @section('content')

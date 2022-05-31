@@ -2,7 +2,19 @@
 
 use App\Models\ItemType;
 use App\Models\MyPropertyRoom;
+use App\Models\RoomType;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
+
+// Log::info('MIDS_PROP_WIZ4: Session variables .', ['my_property_id', session('g_my_property_id')]);
+// Log::info('MIDS_PROP_WIZ4: Session variables .', ['data', session()->all()]);
+
+function dbg($mesg)
+{
+    echo $mesg;
+    echo "<br>";
+};
 
 // $rmid is the property_room_id - passed in from the router
 
@@ -19,15 +31,51 @@ if ($roomrec->count() == 0) {
 $thisroom = $roomrec->first()->room_name;
 $room_type_id = $roomrec->first()->room_type_id;
 
-// $rooms is being used for the dropdown list
-
-$rooms = MyPropertyRoom::all()->where('my_property_id', session('g_my_property_id'));
+// get the next room in sequence
 
 
-if ($rooms->count() == 0) {
+
+$g_rooms = session('g_rooms');
+
+if ($g_rooms == "") {
+
+    $rooms = MyPropertyRoom::orderBy('seq', 'ASC')
+        ->orderBy('room_name', 'ASC')
+        ->where('my_property_id', session('g_my_property_id'))
+        ->join('room_types', 'my_property_rooms.room_type_id', '=', 'room_types.room_type_id')
+        ->get();
+
+    Session::put('g_rooms', $rooms);
+    $g_rooms = session('g_rooms');
+}
+
+// get the next (based on sequence) room ID which we will asutomatically take the user to upon submission
+
+$property_room_id_next = 0;
+
+$flag = "N";
+
+foreach ($g_rooms as $r) {
+
+
+
+    if ($flag <> "Y") {
+
+        if ($r->property_room_id == $rmid) {
+            $flag = "P";
+        } elseif ($flag == "P") {
+            $property_room_id_next = $r->property_room_id;
+            $flag = "Y";
+        }
+    }
+};
+
+
+if (session('g_rooms')->count() == 0) {
     echo "Unable to access list of rooms or user not authenticated";
     return;
 }
+
 
 $items = ItemType::all()->where('dflt_room_type_id', $room_type_id)
     ->where('include_in_wizard', 'Y');
@@ -72,7 +120,7 @@ the user is asked to specify how many of each they have
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach ($rooms as $room)
+                            @foreach ($g_rooms as $room)
                             <li><a class="dropdown-item" href="/roomwiz/{{$room->property_room_id}}">{{$room->room_name}}</a></li>
 
                             @endforeach
@@ -90,7 +138,8 @@ the user is asked to specify how many of each they have
                         @method('PUT')
 
 
-                        <input type="hidden" name="my_property_room_id" value="{{ $rmid}}">
+                        <input type="hidden" name="property_room_id" value="{{ $rmid}}">
+                        <input type="hidden" name="property_room_id_next" value="{{ $property_room_id_next}}">
 
 
                         <!-- Need to display now each of the items and allow quantity to be entered -->
@@ -127,9 +176,12 @@ the user is asked to specify how many of each they have
 
 
                         @endforeach
-
-
-                        <button type="submit" class="btn btn-primary mb-3">Save & continue...</button>
+                        <p></p>
+                        @if (session('g_wizard_mode') == 'Y')
+                        <button type="submit" class="btn btn-primary mb-3">Save & next room...</button>
+                        @else
+                        <button type="submit" class="btn btn-primary mb-3">Save</button>
+                        @endif
                     </form>
 
 
@@ -144,6 +196,7 @@ the user is asked to specify how many of each they have
 
 <script>
     function toggle() {
-        alert("toggle!");
+        // alert("toggle!");
+        return;
     }
 </script>

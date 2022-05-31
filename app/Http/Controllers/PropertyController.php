@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 
 use App\Models\MyProperty;
@@ -119,7 +120,8 @@ class PropertyController extends Controller
 
         ]);
 
-
+        if (session('g_my_property_id') == "")
+            Session::put('g_my_property_id', $prec->my_property_id);
         return view('mids_prop_wiz2', [
             'prec' => $prec,
             'rtypes' => RoomType::All()->sortBy('seq')
@@ -213,7 +215,7 @@ class PropertyController extends Controller
 
     public function prop_wiz3_db(Request $data)
     {
-        // validate the submitted form data and then updated the 
+        // validate the submitted form data and then update the 
         // individual property room records with assigned names & comments
 
 
@@ -239,11 +241,10 @@ class PropertyController extends Controller
             // We'll also pull out the first property_room_id as the one we'll pass to the next step of the wizard
 
 
-            if ($i==0)
-              $property_room_id = $ids[$i];
+            if ($i == 0)
+                $property_room_id = $ids[$i];
 
             MyPropertyRoom::where('property_room_id', $ids[$i])
-
                 ->update([
                     'room_name' => $room_names[$i],
                     'comments'  => $comments[$i]
@@ -264,9 +265,10 @@ class PropertyController extends Controller
         //     ->first();
 
         // session(['g_my_property_id' => $data->my_property_id]);
-            
-            
-        return view('mids_prop_wiz4', 
+
+
+        return view(
+            'mids_prop_wiz4',
             ['rmid' => $property_room_id]
         );
     }
@@ -282,12 +284,17 @@ class PropertyController extends Controller
         $names        = $data['name'];
         $comments    = $data['comments'];
 
-        $numrecs     = count($ids);            
-              
+        $numrecs = 0;
+
+        if ($ids != "")
+            $numrecs     = count($ids);
+
         $i = 0;
 
         // this loop is for the item_type_ids - we want to populate by inserting into 
         // my_items
+
+
 
         while ($i <= $numrecs - 1) {
 
@@ -298,7 +305,7 @@ class PropertyController extends Controller
                 $itemrec = MyItem::create([
                     'user_id' => Auth::id(),
                     'item_type_id' => $ids[$i],
-                    'property_room_id' => $data['my_property_room_id'],
+                    'property_room_id' => $data['property_room_id'],
                     'my_property_id' => session('g_my_property_id'),
                     'name' => $names[$i],
                     'qty' => $qtys[$i],
@@ -307,7 +314,7 @@ class PropertyController extends Controller
                     'version' => 1,
                     'date_effective_from' => now(),
                     'status' => 'ACTIVE'
-        
+
                 ]);
 
             }
@@ -315,10 +322,31 @@ class PropertyController extends Controller
             $i++;
         }
 
-            
-        // return view('mids_prop_wiz4', 
-        //     ['rmid' => $property_room_id]
-        // );
-    }
 
+        // we want to redirect the user to the "next" room - which would be the next in sequence after the current room
+
+        //dd("next=" . $data['property_room_id_next']);
+
+        if ($data['property_room_id_next'] == 0) {
+
+            Session::put('g_wizard_mode','N');
+
+            return view(
+                'mids_prop_wiz_room_master',
+                ['rmid' => session('g_my_property_id')]
+            );
+
+        }
+        else
+
+            // return view('mids_prop_wiz_room_master',['property_id',session('g_my_property_id')]);
+
+
+            //        /roomwiz/{{$room->property_room_id}}
+            return view(
+                'mids_prop_wiz4',
+                ['rmid' => $data['property_room_id_next']]
+
+            );
+    }
 }
