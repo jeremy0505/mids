@@ -73,7 +73,9 @@
                                 <a class="dropdown-item" href="/wizmaster/{{session('g_my_property_id')}}">
                                     Wizard Master
                                 </a>
-
+                                <a class="dropdown-item" href="/carreg">
+                                    Vehicle Lookup
+                                </a>
 
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

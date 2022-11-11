@@ -2,8 +2,6 @@
 
 use App\Models\ItemType;
 use App\Models\MyPropertyRoom;
-use App\Models\RoomType;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 
@@ -77,11 +75,23 @@ if (session('g_rooms')->count() == 0) {
 }
 
 
+
+// $items should realy be a join between my_items and item_types then we can 
+// bring in the relevant data that already exists
+
+
 $items = ItemType::all()->where('dflt_room_type_id', $room_type_id)
     ->where('include_in_wizard', 'Y');
 
+    
+$items = MyPropertyRoom::orderBy('seq', 'ASC')
+    ->orderBy('room_name', 'ASC')
+    ->where('my_property_id', session('g_my_property_id'))
+    ->join('room_types', 'my_property_rooms.room_type_id', '=', 'room_types.room_type_id')
+    ->get();
 
-// also ideentify now if there is already any room items data for this room - if so then
+
+// also identify now if there is already any room items data for this room - if so then
 // we will display the current info stored as opposed to prompting
 
 
@@ -114,7 +124,7 @@ the user is asked to specify how many of each they have
                 </div>
                 <div class="card-footer">
 
-                    @if (session('g_wizard_mode'=='Y'))
+                    @if (session('g_wizard_mode') != 'Y')
                     <div class="dropdown align-content-end">
                         <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Room selector

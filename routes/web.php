@@ -86,6 +86,18 @@ Route::get('/wizmaster/{id}', function ($property_id) {
 
 
 
+
+        
+Route::middleware(['cors'])->group(function () {
+Route::get('/carreg', function () {
+    return view('mids_car_reg',
+                []);
+            });
+        
+
+});
+
+
 // route to test "powergrid"
 
 

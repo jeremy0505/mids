@@ -1,0 +1,19 @@
+{
+    "registrationNumber": "RX22YFU",
+    "artEndDate": "2028-04-30",
+    "co2Emissions": 51,
+    "engineCapacity": 2894,
+    "euroStatus": "EURO 6AP",
+    "markedForExport": false,
+    "fuelType": "HYBRID ELECTRIC",
+    "motStatus": "No details held by DVLA",
+    "colour": "GREY",
+    "make": "PORSCHE",
+    "typeApproval": "M1",
+    "yearOfManufacture": 2022,
+    "taxDueDate": "2023-05-01",
+    "taxStatus": "Taxed",
+    "dateOfLastV5CIssued": "2022-05-17",
+    "wheelplan": "2 AXLE RIGID BODY",
+    "monthOfFirstRegistration": "2022-05"
+}
