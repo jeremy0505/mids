@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Base\MyItem as BaseMyItem;
+use Illuminate\Support\Facades\DB;
+
 
 class MyItem extends BaseMyItem
 {
@@ -39,4 +41,17 @@ class MyItem extends BaseMyItem
 		'upd_date',
 		'upd_user_id'
 	];
+
+	static function item_basic_data ($userid)
+	{
+		//return(MyItem::select('user_id','mfr','name')->where('user_id','=',$userid));
+
+		return (DB::table('my_items')
+            ->select('mfr', 'name','model_name','serial_number','price_paid')
+			->where ('user_id','=',$userid)
+            ->get());
+	}
+
+
 }
+
