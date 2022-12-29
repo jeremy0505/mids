@@ -42,16 +42,30 @@ class MyItem extends BaseMyItem
 		'upd_user_id'
 	];
 
-	static function item_basic_data ($userid)
+	static function item_basic_data($systype)
 	{
 		//return(MyItem::select('user_id','mfr','name')->where('user_id','=',$userid));
 
+		// $catid = DB::table('categories')
+		// -> select('category_id')
+		// -> where ('system_type' ,$systype)
+		// -> get();
+
+		// return $catid;
+
+
+		// 	return (DB::table('my_items')
+		//         ->select('mfr', 'name','model_name','serial_number','price_paid')
+		// 		->where ('category_id','=',$catid)
+		//         ->get());
+		// }
+
+
 		return (DB::table('my_items')
-            ->select('mfr', 'name','model_name','serial_number','price_paid')
-			->where ('user_id','=',$userid)
-            ->get());
+			->join('item_types', 'item_types.item_type_id', '=', 'my_items.item_type_id')
+			->join('categories', 'categories.category_id', '=', 'item_types.category_id')
+			->select('mfr', 'my_items.name', 'model_name', 'serial_number', 'price_paid')
+			->where('categories.system_type', '=', strtoupper($systype))
+			->get());
 	}
-
-
 }
-
