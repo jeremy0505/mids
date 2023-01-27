@@ -147,8 +147,10 @@ class AuthController extends Controller
 
         // send it to oneai
         $time_start = microtime(true);
-        $url = 'https://api.oneai.com/api/v0/pipeline';
 
+        // URL & api_key need to be externalised
+
+        $url = 'https://api.oneai.com/api/v0/pipeline';
         $api_key = 'd777c079-8613-4aab-ada0-a4b1ef513b6e';
 
         $data = '{
