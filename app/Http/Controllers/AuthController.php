@@ -208,10 +208,6 @@ class AuthController extends Controller
                 if (in_array($keycomp, $elements)) {
 
                     // then we know this will be followed by a value in the array so....
-
-                    //echo ' ' . $valsarr[$inc] . ':' . $valsarr[$inc + 1] . PHP_EOL;
-
-
                     // stick the values into an array - we want label & value
                     $labels[$sub] = strtolower($valsarr[$inc]);
                     $values[$sub] = $valsarr[$inc + 1];
@@ -228,8 +224,6 @@ class AuthController extends Controller
                       - date:
                       - money:
                       - duration:
-
-
             */
 
 
@@ -247,58 +241,16 @@ class AuthController extends Controller
                 $money = findnext($labels, $values, 'money', $i);
                 $duration = findnext($labels, $values, 'duration', $i);
 
-                // echo 'our record looks thus:' . PHP_EOL;
-                // echo ' - org:' . $org . PHP_EOL;
-                // echo ' - date:' . $date . PHP_EOL;
-                // echo ' - money:' . $money . PHP_EOL;
-                // echo ' - duration:' . $duration . PHP_EOL;
-
                 $finarray[$finsub] = array('org' => $org, 'date' => $date, 'money' => $money, 'duration' => $duration);
                 $finsub++;
             }
         }
-
-
-
-        // for ($i = 0; $i < $sub; $i++) {
-
-        //     // to build a single "record" in json we need to specify on a single line like the example below - 
-        //     // but that means I need to collect all of the values (and add any missing) 
-        //     if ($labels[$i] = 'org') {
-        //         // is next value also "org" - if so we should create a dummy entry for date
-        //         null;
-        //     }
-        // }
 
         $time_end = microtime(true);
         $execution_time = round(($time_end - $time_start), 2);
         $json_out['data_out'] = $finarray;
         $json_out['execution_time'] = $execution_time;
         $json_out['oneai_response'] = json_decode($oneairesp);
-
-
-
-
-
-        // what we want to do here is to construct a JSON structure returning the 
-        // relevant data items we have received from oneAI - this data all now exists in arrays - 
-        // but is muddled - let's assume that the structure of data is one or more 
-        // "organisations" but just take the first occurrence of date, money, duration - we're assuming 
-        // in these examples that the period and price are the same for all organisations
-
-        // so we have the arrays - $labels & $values - and we have the elapsed_time
-        // how do we construct a json object from this?
-
-
-
-
-        // for ($j = 0; $j < $i; $j++) {
-
-        //     $json_out[$labels[$j]] = $values[$j];
-
-        // }
-        // echo 'Elapsed ' . $execution_time . ' ms' . PHP_EOL;
-
 
 
         return [($json_out), 200];
@@ -335,20 +287,12 @@ function outputRecursive($data)
 
         } else {
             if (is_int($key)) {
-                null;
-                // echo "The key is an INT $value" . PHP_EOL;
-                // echo 'B - outputRecursive ' . $index . PHP_EOL;
 
                 continue;
             }
-            // if ($key=='name') {
-
-            //echo $key . '::' . $value . PHP_EOL;
-            // echo 'C - outputRecursive ' . $index . PHP_EOL;
 
             $index = $index + 1;
-            // echo '$key=' . $key . PHP_EOL;
-            // echo '$value=' . $value . PHP_EOL;
+
             $keysarr[$index] = $key;
             $valsarr[$index] = $value;
 
