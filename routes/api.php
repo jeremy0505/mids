@@ -27,9 +27,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // >----------------------
 // Sanctum / API dev work
 
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logoff', [AuthController::class, 'logoff']);
+    Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/textin', [AuthController::class, 'textin']);
+});
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
 
 Route::get('myitems/{systype}', function ($systype) {
 
