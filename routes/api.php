@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\MyItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\MyItem;
@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logoff', [AuthController::class, 'logoff']);
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/textin', [AuthController::class, 'textin']);
+    Route::post('/makesampleitems', [MyItemController::class, 'createsample']);
 });
 
 Route::post('/register', [AuthController::class, 'register']);

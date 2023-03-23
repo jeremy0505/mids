@@ -41,7 +41,7 @@ drop table if exists categories;
 drop table if exists room_types;
 drop table if exists clients;
 
-
+drop table if exists suggested_items;
 
 drop view if exists v_my_items;
 drop view if exists v_my_property_rooms;

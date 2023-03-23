@@ -10,7 +10,6 @@ Cooker,COOKER,APPLIANCE,KITCHEN,Y,\N,Y,Retailer,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N
 Oven,OVEN,APPLIANCE,KITCHEN,Y,\N,Y,Retailer,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,
 Hob,HOB,APPLIANCE,KITCHEN,Y,\N,Y,Retailer,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,\N,
 Television,TV,AUDIO_VISUAL,LIVING,Y,\N,Y,Retailer,Y,Manufacturer,Y,Model,Y,Serial number,Y,Purchase date,\N,\N,\N,\N,Y,Cost,\N,\N,\N,\N,\N,\N,\N,\N,
-
 Sound bar,SOUNDBAR,AUDIO_VISUAL,LIVING,Y,\N,Y,Retailer,Y,Manufacturer,Y,Model,Y,Serial number,Y,Purchase date,\N,\N,\N,\N,Y,Cost,\N,\N,\N,\N,\N,\N,\N,\N,
 DVD player,DVD_PLAYER,AUDIO_VISUAL,\N,Y,\N,Y,Retailer,Y,Manufacturer,Y,Model,Y,Serial number,Y,Purchase date,\N,\N,\N,\N,Y,Cost,\N,\N,\N,\N,\N,\N,\N,\N,
 CD player,CD_PLAYER,AUDIO_VISUAL,\N,Y,\N,Y,Retailer,Y,Manufacturer,Y,Model,Y,Serial number,Y,Purchase date,\N,\N,\N,\N,Y,Cost,\N,\N,\N,\N,\N,\N,\N,\N,

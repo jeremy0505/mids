@@ -96,8 +96,8 @@ IGNORE 1 ROWS;
 show warnings;
 
 -- room types
-insert into room_types (client_id, code, name,seq)
-select 0, code,name,seq
+insert into room_types (client_id, code, name)
+select 0, code,name
 from stage_room_types;
 
 

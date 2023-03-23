@@ -233,6 +233,7 @@ CREATE TABLE IF NOT EXISTS `mids`.`room_types` (
   `client_id` BIGINT UNSIGNED NOT NULL,
   `code` VARCHAR(30) NOT NULL,
   `name` VARCHAR(80) NULL,
+  `seq` INT UNSIGNED NULL,
   `cre_date` DATETIME NOT NULL DEFAULT now(),
   `cre_user_id` BIGINT UNSIGNED NULL,
   `upd_date` DATETIME NULL,
@@ -417,7 +418,6 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   `item_type_id` BIGINT UNSIGNED NOT NULL,
   `user_id` BIGINT UNSIGNED NOT NULL,
   `my_property_id` BIGINT UNSIGNED NOT NULL,
-  `my_property_room_id` BIGINT UNSIGNED NULL,
   `client_id` BIGINT UNSIGNED NOT NULL,
   `version` INT NOT NULL COMMENT 'Record version number - starting at 1 - increments on each “date effective update”\n',
   `date_effective_from` DATE NOT NULL,
@@ -453,7 +453,6 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   INDEX `fk_t_my_items_t_my_property_rooms1_idx` (`property_room_id` ASC) VISIBLE,
   INDEX `fk_t_my_items_t_mids_users1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_t_my_items_t_my_properties1_idx` (`my_property_id` ASC) VISIBLE,
-  INDEX `fk_my_items_my_property_rooms1_idx` (`my_property_room_id` ASC) VISIBLE,
   CONSTRAINT `fk_t_my_items_t_master_item_types1`
     FOREIGN KEY (`item_type_id`)
     REFERENCES `mids`.`item_types` (`item_type_id`),
@@ -466,11 +465,6 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   CONSTRAINT `fk_t_my_items_t_my_properties1`
     FOREIGN KEY (`my_property_id`)
     REFERENCES `mids`.`my_properties` (`my_property_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_my_items_my_property_rooms1`
-    FOREIGN KEY (`my_property_room_id`)
-    REFERENCES `mids`.`my_property_rooms` (`property_room_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -601,6 +595,7 @@ CREATE TABLE IF NOT EXISTS `mids`.`plans` (
   `cre_user_id` BIGINT UNSIGNED NULL,
   `upd_date` DATETIME NULL,
   `upd_user_id` BIGINT NULL,
+  `free_for_life_flag` VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT 'Y or N',
   PRIMARY KEY (`plan_id`),
   INDEX `fk_t_plans_t_clients1_idx` (`client_id` ASC) VISIBLE,
   UNIQUE INDEX `plan_code_UNIQUE` (`plan_code` ASC) VISIBLE,
@@ -978,6 +973,25 @@ CREATE TABLE IF NOT EXISTS `mids`.`suggested_items` (
     REFERENCES `mids`.`item_types` (`item_type_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `mids`.`sample_my_items`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mids`.`sample_my_items` (
+  `item_code` VARCHAR(30) NULL,
+  `cost` INT NULL,
+  `cost_basis` VARCHAR(30) NULL,
+  `start_date` DATETIME NULL,
+  `expiry_date` DATETIME NULL,
+  `mfr` VARCHAR(80) NULL,
+  `model_name` VARCHAR(80) NULL,
+  `purch_date` DATETIME NULL,
+  `price_paid` INT NULL,
+  `val_now` INT NULL,
+  `serial_number` VARCHAR(80) NULL)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
