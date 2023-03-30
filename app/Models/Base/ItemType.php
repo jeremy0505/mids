@@ -81,13 +81,11 @@ class ItemType extends Model
 		'dflt_room_type_id' => 'int',
 		'client_id' => 'int',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int'
+		'upd_user_id' => 'int',
+		'cre_date' => 'datetime',
+		'upd_date' => 'datetime'
 	];
 
-	protected $dates = [
-		'cre_date',
-		'upd_date'
-	];
 
 	public function category_id()
 	{

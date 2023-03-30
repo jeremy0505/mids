@@ -40,14 +40,13 @@ class UserAccountAccess extends Model
 		'account_id' => 'int',
 		'client_id' => 'int',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int'
+		'upd_user_id' => 'int',
+		'date_granted' => 'datetime',
+		'cre_date' => 'datetime',
+		'upd_date' => 'datetime'
 	];
 
-	protected $dates = [
-		'date_granted',
-		'cre_date',
-		'upd_date'
-	];
+
 
 	public function account_id()
 	{

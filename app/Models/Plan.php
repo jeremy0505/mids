@@ -45,10 +45,7 @@ class Plan extends Model
 		'discounted_fee' => 'float',
 		'revert_to_fee' => 'float',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int'
-	];
-
-	protected $dates = [
+		'upd_user_id' => 'int',		
 		'date_avail_start',
 		'date_avail_end',
 		'cre_date',

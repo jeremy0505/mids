@@ -40,13 +40,11 @@ class RoomType extends Model
 		'client_id' => 'int',
 		'cre_user_id' => 'int',
 		'upd_user_id' => 'int',
-		'seq' => 'int'
+		'seq' => 'int',
+		'cre_date' => 'datetime',
+		'upd_date' => 'datetime'
 	];
 
-	protected $dates = [
-		'cre_date',
-		'upd_date'
-	];
 
 	public function item_types_where_dflt()
 	{

@@ -23,7 +23,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+        // upgrading laravel 9 to 10 - they say this is now default and the line
+        // below could be removed - commenting it out
+        
+        // $this->registerPolicies();
 
         //
     }

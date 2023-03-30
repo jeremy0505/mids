@@ -38,13 +38,11 @@ class Account extends Model
 		'account_owner_user_id' => 'int',
 		'client_id' => 'int',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int'
+		'upd_user_id' => 'int',
+		'cre_date' => 'datetime',
+		'upd_date' => 'datetime'
 	];
 
-	protected $dates = [
-		'cre_date',
-		'upd_date'
-	];
 
 	public function account_owner_user()
 	{

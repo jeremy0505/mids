@@ -78,20 +78,19 @@ class MyItem extends Model
 		'property_room_id' => 'int',
 		'num_days_pre_exp_notifs' => 'int',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int'
+		'upd_user_id' => 'int',
+		'date_effective_from' => 'datetime',
+		'date_effective_to' => 'datetime',
+		'purch_date' => 'datetime',
+		'start_date' => 'datetime',
+		'expiry_date' => 'datetime',
+		'val_now_eff_date' => 'datetime',
+		'val_ins_purposes_date' => 'datetime',
+		'cre_date' => 'datetime',
+		'upd_date' => 'datetime'
 	];
 
-	protected $dates = [
-		'date_effective_from',
-		'date_effective_to',
-		'purch_date',
-		'start_date',
-		'expiry_date',
-		'val_now_eff_date',
-		'val_ins_purposes_date',
-		'cre_date',
-		'upd_date'
-	];
+
 
 	public function item_type_id()
 	{

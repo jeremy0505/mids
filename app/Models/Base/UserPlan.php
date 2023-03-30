@@ -48,15 +48,14 @@ class UserPlan extends Model
 		'from_discounted_fee' => 'float',
 		'from_revert_to_fee' => 'float',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int'
+		'upd_user_id' => 'int',
+		'from_date_avail_start' => 'datetime',
+		'from_date_avail_end' => 'datetime',
+		'cre_date'  => 'datetime',
+		'upd_date' => 'datetime'
 	];
 
-	protected $dates = [
-		'from_date_avail_start',
-		'from_date_avail_end',
-		'cre_date',
-		'upd_date'
-	];
+
 
 	public function user()
 	{
