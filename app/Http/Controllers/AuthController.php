@@ -15,7 +15,7 @@ $valsarr = array();
 
 //$elements = array ('name'); // this could equally be a string - but using an array so that we can extend it later
 
-
+// comment line to test 
 
 class AuthController extends Controller
 {
