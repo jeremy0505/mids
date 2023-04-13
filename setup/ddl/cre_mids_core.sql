@@ -445,6 +445,7 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   `subs_plan_end` DATETIME NULL,
   `subs_plan_cost` INT NULL,
   `subs_plan_cost_basis` VARCHAR(30) NULL,
+  `sample_flag` VARCHAR(1) NULL COMMENT 'Used for tracking data that is not entered by the user - demo / sample data',
   `cre_date` DATETIME NOT NULL DEFAULT now(),
   `cre_user_id` BIGINT UNSIGNED NULL,
   `upd_date` DATETIME NULL,
@@ -984,11 +985,11 @@ CREATE TABLE IF NOT EXISTS `mids`.`sample_my_items` (
   `item_code` VARCHAR(30) NULL,
   `cost` INT NULL,
   `cost_basis` VARCHAR(30) NULL,
-  `start_date` DATETIME NULL,
-  `expiry_date` DATETIME NULL,
+  `start_date` DATE NULL,
+  `expiry_date` DATE NULL,
   `mfr` VARCHAR(80) NULL,
   `model_name` VARCHAR(80) NULL,
-  `purch_date` DATETIME NULL,
+  `purch_date` DATE NULL,
   `price_paid` INT NULL,
   `val_now` INT NULL,
   `serial_number` VARCHAR(80) NULL)
@@ -1000,7 +1001,7 @@ USE `mids` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `mids`.`v_my_items`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `model_name` INT, `mfr` INT, `serial_number` INT, `purch_date` INT, `start_date` INT, `expiry_date` INT, `price_paid` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT, `access_mode` INT);
+CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `cat_name` INT, `cat_system_type` INT, `item_type_code` INT, `cat_user_type` INT, `item_type_name` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `model_name` INT, `mfr` INT, `serial_number` INT, `purch_date` INT, `start_date` INT, `expiry_date` INT, `price_paid` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT, `access_mode` INT);
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
@@ -1017,15 +1018,20 @@ SHOW WARNINGS;
 USE `mids`;
 CREATE or replace VIEW `v_my_items` AS 
 select my_item_id,
-    item_type_id,
-    user_id,
+    mi.item_type_id,
+    mi.user_id,
     my_property_id,
-    client_id,
+    mi.client_id,
     version,
     date_effective_from,
     date_effective_to,
+    cat.name cat_name, 
+    cat.system_type cat_system_type, 
+    it.code item_type_code, 
+    cat.user_type cat_user_type, 
+    it.name item_type_name,
     insured_by_my_item_id,
-    name,
+    mi.name,
     qty,
     model_name,
     mfr,
@@ -1042,13 +1048,17 @@ select my_item_id,
     status,
     property_room_id,
     num_days_pre_exp_notifs,
-    cre_date,
-    cre_user_id,
-    upd_date,
-    upd_user_id,
+    mi.cre_date,
+    mi.cre_user_id,
+    mi.upd_date,
+    mi.upd_user_id,
     'FULL' access_mode
-from my_items mi
-where date_effective_to is null;
+from my_items mi,
+item_types it, 
+categories cat
+where mi.date_effective_to is null
+and   mi.item_type_id = it.item_type_id
+and   it.category_id = cat.category_id;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
