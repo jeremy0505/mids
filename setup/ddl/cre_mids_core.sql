@@ -1011,6 +1011,12 @@ CREATE TABLE IF NOT EXISTS `mids`.`v_my_property_rooms` (`property_room_id` INT,
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
+-- Placeholder table for view `mids`.`v_my_items_summary`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mids`.`v_my_items_summary` (`count_items` INT, `sum_subs_plan_cost` INT, `reporting_category` INT, `user_id` INT);
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
 -- View `mids`.`v_my_items`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mids`.`v_my_items`;
@@ -1077,6 +1083,32 @@ VIEW `mids`.`v_my_property_rooms` AS
         'FULL' AS `access_mode`
     FROM
         `mids`.`my_property_rooms`;
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- View `mids`.`v_my_items_summary`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mids`.`v_my_items_summary`;
+SHOW WARNINGS;
+USE `mids`;
+CREATE or replace VIEW `v_my_items_summary` AS
+select count(my_items.my_item_id) count_items, 
+       ifnull(sum(subs_plan_cost),0) sum_subs_plan_cost, 
+case categories.system_type
+  when 'SUBS_DIGI_ADMIN' then 'ENTERTAINMENT'
+  when 'SUBS_DIGI_ENT' then 'ENTERTAINMENT'
+else 
+  categories.system_type
+end reporting_category,
+my_items.user_id user_id
+from item_types 
+  left outer join my_items on item_types.item_type_id = my_items.item_type_id ,
+  categories
+where item_types.category_id = categories.category_id
+and categories.system_type in ('SUBS_DIGI_ADMIN','SUBS_DIGI_ENT','COMMUNICATIONS','BROADBAND','MOTOR','INSURANCE')
+-- latest record only
+and my_items.date_effective_to is null
+group by 3,4;
 SHOW WARNINGS;
 
 SET SQL_MODE=@OLD_SQL_MODE;
