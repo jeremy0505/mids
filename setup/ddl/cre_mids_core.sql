@@ -1095,7 +1095,7 @@ CREATE or replace VIEW `v_my_items_summary` AS
 select count(my_items.my_item_id) count_items, 
        ifnull(sum(subs_plan_cost),0) sum_subs_plan_cost, 
 case categories.system_type
-  when 'SUBS_DIGI_ADMIN' then 'ENTERTAINMENT'
+when 'SUBS_DIGI_ADMIN' then 'CLOUD'
   when 'SUBS_DIGI_ENT' then 'ENTERTAINMENT'
 else 
   categories.system_type
@@ -1105,8 +1105,6 @@ from item_types
   left outer join my_items on item_types.item_type_id = my_items.item_type_id ,
   categories
 where item_types.category_id = categories.category_id
-and categories.system_type in ('SUBS_DIGI_ADMIN','SUBS_DIGI_ENT','COMMUNICATIONS','BROADBAND','MOTOR','INSURANCE')
--- latest record only
 and my_items.date_effective_to is null
 group by 3,4;
 SHOW WARNINGS;

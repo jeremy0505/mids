@@ -136,11 +136,46 @@ class MyItemController extends Controller
                         and   mp.user_id = '$user->id'");
 
             return ['status' => 'OK', 'message' => 'Sample data created OK'];
-
         } else {
             return ['status' => 'OK', 'message' => 'Sample data already present'];
         }
+    }
 
 
+    public function item_summary_counts()
+    {
+
+        // this will be a protected (by sanctum) function
+        // we don't want to create sample items if there are already ones created - they are identified by 
+        // the column "sample_flag" being set to Y
+        //
+
+        // 
+
+        $cats = "('ENTERTAINMENT','INSURANCE','MOTOR','CLOUD')";
+
+        $user = Auth::user();
+
+        // get the number of items by category from the view v_my_items_summary
+
+        // DB::select("select * from v_my_items_summary where ifnull(user_id,$user->id) = $user->id");
+
+
+
+        $results = DB::table('v_my_items_summary')
+            ->select(
+                DB::raw(
+                    'sum(count_items) count_items,
+                    sum(sum_subs_plan_cost) sum_subs_plan_cost,
+                    case reporting_category'
+                )
+            )
+            ->whereRaw("ifnull(user_id,$user->id)=$user->id
+                        and reporting_category in $cats")
+            ->groupBy('reporting_category')
+            ->orderBy('reporting_category')
+            ->get();
+
+        return $results;
     }
 }

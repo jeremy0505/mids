@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logoff', [AuthController::class, 'logoff']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::get('/item_summary_counts', [MyItemController::class, 'item_summary_counts']);
     Route::post('/textin', [AuthController::class, 'textin']);
     Route::post('/makesampleitems', [MyItemController::class, 'createsample']);
 });
