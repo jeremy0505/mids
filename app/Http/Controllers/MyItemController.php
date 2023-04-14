@@ -177,10 +177,65 @@ class MyItemController extends Controller
             ->get();
 
         // do some post-query processing to ensure that the JSON we return has everything required - we want to add
-        // "zero" narrative and also long label and graph label
+        // "zero" hint and also long label and graph label
 
-    
+        $hint = array();
+        $label_long = array();
+        $label_graph = array();
 
-        return $results;
+        $i = 0;
+        foreach ($results as $r) {
+            if ($r->reporting_category == 'ENTERTAINMENT') {
+                $label_long[$i] = 'Entertainment services';
+                $label_graph[$i] = 'Entertainment';
+            } elseif ($r->reporting_category == 'CLOUD') {
+                $label_long[$i] = 'Cloud Subscriptions';
+                $label_graph[$i] = 'Cloud';
+            } elseif ($r->reporting_category == 'INSURANCE') {
+                $label_long[$i] = 'Insurance policies';
+                $label_graph[$i] = 'Insurance';
+            } elseif ($r->reporting_category == 'MOTOR') {
+                $label_long[$i] = 'Vehicles';
+                $label_graph[$i] = 'Vehicles';
+            } else {
+                $label_long[$i] = $r->reporting_category;
+                $label_graph[$i] = $r->reporting_category;
+            }
+
+
+            if ($r->count_items == 0) {
+                if ($r->reporting_category == 'ENTERTAINMENT')
+                    $hint[$i] = 'Hint: set up details of TV and Audio subscriptions such as Netflix an Spotify';
+                elseif ($r->reporting_category == 'CLOUD')
+                    $hint[$i] = 'Hint: set up details of your DropBox, iCloud, Office 365 etc. subscriptions';
+                elseif ($r->reporting_category == 'INSURANCE')
+                    $hint[$i] = 'Hint: set up details of your home, buildings, vehicle and other insurance policies';
+                elseif ($r->reporting_category == 'MOTOR')
+                    $hint[$i] = 'Hint: set up details of your cars, motorcycles, quad bikes etc.';
+                else
+                    $hint[$i] = 'Hint (empty)';
+            } else {
+                $hint[$i] = '';
+            }
+
+
+            $i++;
+        }
+
+        // so we have the additional texts that we want; now we have to build the final array
+        $finarray = array();
+
+        $i = 0;
+        foreach ($results as $r) {
+            $finarray[$i] = array('reporting_category' => $r->reporting_category, 
+                                  'count_items' => $r->count_items, 
+                                  'sum_subs_plan_cost' => $r->sum_subs_plan_cost, 
+                                  'label_graph' => $label_graph[$i], 
+                                  'label_long' => $label_long[$i],
+                                  'hint' => $hint[$i]);
+            $i++;
+        }
+
+        return $finarray;
     }
 }
