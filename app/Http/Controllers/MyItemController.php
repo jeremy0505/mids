@@ -167,7 +167,7 @@ class MyItemController extends Controller
                 DB::raw(
                     'sum(count_items) count_items,
                     sum(sum_subs_plan_cost) sum_subs_plan_cost,
-                    case reporting_category'
+                    reporting_category'
                 )
             )
             ->whereRaw("ifnull(user_id,$user->id)=$user->id
@@ -175,6 +175,11 @@ class MyItemController extends Controller
             ->groupBy('reporting_category')
             ->orderBy('reporting_category')
             ->get();
+
+        // do some post-query processing to ensure that the JSON we return has everything required - we want to add
+        // "zero" narrative and also long label and graph label
+
+    
 
         return $results;
     }
