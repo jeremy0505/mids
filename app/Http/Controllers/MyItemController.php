@@ -123,14 +123,14 @@ class MyItemController extends Controller
 
             DB::insert("insert into my_items 
                         (item_type_id, user_id,my_property_id, client_id, status, version, date_effective_from,name,mfr,serial_number,model_name, 
-                        price_paid, val_now, purch_date, start_date, expiry_date,subs_plan_cost,subs_plan_cost_basis,sample_flag)
+                        cost_initial, val_now, purch_date, start_date, expiry_date,cost_recurring,cost_recurring_freq,sample_flag)
                         select it.item_type_id, '$user->id', 
                         mp.my_property_id,
                         0,
                         'ACTIVE',
                         1, 
                         curdate(),mfr, 
-                        mfr,serial_number,model_name,price_paid, val_now,purch_date,start_date,expiry_date,cost,cost_basis,'Y'
+                        mfr,serial_number,model_name,cost_initial, val_now,purch_date,start_date,expiry_date,cost_recurring,cost_recurring_freq,'Y'
                         from sample_my_items smy, item_types it, my_properties mp
                         where smy.item_code = it.code
                         and   mp.user_id = '$user->id'");
@@ -166,7 +166,7 @@ class MyItemController extends Controller
             ->select(
                 DB::raw(
                     'sum(count_items) count_items,
-                    sum(sum_subs_plan_cost) sum_subs_plan_cost,
+                    sum(sum_cost_recurring) sum_cost_recurring,
                     reporting_category'
                 )
             )
@@ -229,7 +229,7 @@ class MyItemController extends Controller
         foreach ($results as $r) {
             $finarray[$i] = array('reporting_category' => $r->reporting_category, 
                                   'count_items' => $r->count_items, 
-                                  'sum_subs_plan_cost' => $r->sum_subs_plan_cost, 
+                                  'sum_cost_recurring' => $r->sum_cost_recurring, 
                                   'label_graph' => $label_graph[$i], 
                                   'label_long' => $label_long[$i],
                                   'hint' => $hint[$i]);

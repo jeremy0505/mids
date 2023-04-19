@@ -34,26 +34,30 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $mfr_label
  * @property string|null $show_model_name
  * @property string|null $model_name_label
- * @property string|null $show_serial
- * @property string|null $serial_label
+ * @property string|null $show_serial_number
+ * @property string|null $serial_number_label
+ * @property string|null $show_reg_date
+ * @property string|null $reg_date_label
  * @property string|null $show_purch_date
  * @property string|null $purch_date_label
+ * @property string|null $show_purchase_type
+ * @property string|null $purchase_type_label
  * @property string|null $show_start_date
  * @property string|null $start_date_label
  * @property string|null $show_expiry_date
  * @property string|null $expiry_date_label
- * @property string|null $show_price_paid
- * @property string|null $price_paid_label
+ * @property string|null $show_cost_initial
+ * @property string|null $cost_initial_label
+ * @property string|null $show_cost_recurring
+ * @property string|null $cost_recurring_label
+ * @property string|null $show_cost_recurring_freq
+ * @property string|null $cost_recurring_freq_label
  * @property string|null $show_val_now
  * @property string|null $val_now_label
  * @property string|null $show_val_now_eff_date
  * @property string|null $val_now_eff_date_label
  * @property string|null $show_val_basis
  * @property string|null $val_basis_label
- * @property string|null $show_val_ins_purposes
- * @property string|null $val_ins_purposes_label
- * @property string|null $show_val_ins_purposes_date
- * @property string|null $val_ins_purposes_date_label
  * @property string|null $show_contact_phone
  * @property string|null $contact_phone_label
  * @property Carbon $cre_date
@@ -80,12 +84,11 @@ class ItemType extends Model
 		'category_id' => 'int',
 		'dflt_room_type_id' => 'int',
 		'client_id' => 'int',
+		'cre_date' => 'date',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int',
-		'cre_date' => 'datetime',
-		'upd_date' => 'datetime'
+		'upd_date' => 'date',
+		'upd_user_id' => 'int'
 	];
-
 
 	public function category_id()
 	{

@@ -1000,14 +1000,14 @@ SHOW WARNINGS;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mids`.`sample_my_items` (
   `item_code` VARCHAR(30) NULL,
-  `cost` INT NULL,
-  `cost_basis` VARCHAR(30) NULL,
+  `cost_recurring` INT NULL,
+  `cost_recurring_freq` VARCHAR(30) NULL,
   `start_date` DATE NULL,
   `expiry_date` DATE NULL,
   `mfr` VARCHAR(80) NULL,
   `model_name` VARCHAR(80) NULL,
   `purch_date` DATE NULL,
-  `price_paid` INT NULL,
+  `cost_initial` INT NULL,
   `val_now` INT NULL,
   `serial_number` VARCHAR(80) NULL)
 ENGINE = InnoDB;

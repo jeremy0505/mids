@@ -30,23 +30,27 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $insured_by_my_item_id
  * @property string|null $name
  * @property int|null $qty
- * @property string|null $model_name
+ * @property string|null $retailer
  * @property string|null $mfr
+ * @property string|null $model_name
  * @property string|null $serial_number
+ * @property Carbon|null $reg_date
  * @property Carbon|null $purch_date
+ * @property string|null $purchase_type
  * @property Carbon|null $start_date
  * @property Carbon|null $expiry_date
- * @property int|null $price_paid
+ * @property int|null $cost_initial
+ * @property int|null $cost_recurring
+ * @property string|null $cost_recurring_freq
  * @property int|null $val_now
  * @property Carbon|null $val_now_eff_date
  * @property string|null $val_basis
- * @property int|null $val_ins_purposes
- * @property Carbon|null $val_ins_purposes_date
  * @property string|null $contact_phone
  * @property string|null $comments
  * @property string $status
  * @property int|null $property_room_id
  * @property int|null $num_days_pre_exp_notifs
+ * @property string|null $sample_flag
  * @property Carbon $cre_date
  * @property int|null $cre_user_id
  * @property Carbon|null $upd_date
@@ -70,27 +74,25 @@ class MyItem extends Model
 		'my_property_id' => 'int',
 		'client_id' => 'int',
 		'version' => 'int',
+		'date_effective_from' => 'date',
+		'date_effective_to' => 'date',
 		'insured_by_my_item_id' => 'int',
 		'qty' => 'int',
-		'price_paid' => 'int',
+		'reg_date' => 'date',
+		'purch_date' => 'date',
+		'start_date' => 'date',
+		'expiry_date' => 'date',
+		'cost_initial' => 'int',
+		'cost_recurring' => 'int',
 		'val_now' => 'int',
-		'val_ins_purposes' => 'int',
+		'val_now_eff_date' => 'date',
 		'property_room_id' => 'int',
 		'num_days_pre_exp_notifs' => 'int',
+		'cre_date' => 'date',
 		'cre_user_id' => 'int',
-		'upd_user_id' => 'int',
-		'date_effective_from' => 'datetime',
-		'date_effective_to' => 'datetime',
-		'purch_date' => 'datetime',
-		'start_date' => 'datetime',
-		'expiry_date' => 'datetime',
-		'val_now_eff_date' => 'datetime',
-		'val_ins_purposes_date' => 'datetime',
-		'cre_date' => 'datetime',
-		'upd_date' => 'datetime'
+		'upd_date' => 'date',
+		'upd_user_id' => 'int'
 	];
-
-
 
 	public function item_type_id()
 	{
