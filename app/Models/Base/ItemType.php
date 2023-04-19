@@ -34,10 +34,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $mfr_label
  * @property string|null $show_model_name
  * @property string|null $model_name_label
+ * @property string|null $show_colour
+ * @property string|null $colour_label
  * @property string|null $show_serial_number
  * @property string|null $serial_number_label
  * @property string|null $show_reg_date
  * @property string|null $reg_date_label
+ * @property string|null $show_mileage
+ * @property string|null $mileage_label
+ * @property string|null $show_mot_date
+ * @property string|null $mot_date_label
  * @property string|null $show_purch_date
  * @property string|null $purch_date_label
  * @property string|null $show_purchase_type

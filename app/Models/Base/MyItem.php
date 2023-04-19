@@ -33,8 +33,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $retailer
  * @property string|null $mfr
  * @property string|null $model_name
+ * @property string|null $colour
  * @property string|null $serial_number
  * @property Carbon|null $reg_date
+ * @property int|null $mileage
+ * @property Carbon|null $mot_date
  * @property Carbon|null $purch_date
  * @property string|null $purchase_type
  * @property Carbon|null $start_date
@@ -79,6 +82,8 @@ class MyItem extends Model
 		'insured_by_my_item_id' => 'int',
 		'qty' => 'int',
 		'reg_date' => 'date',
+		'mileage' => 'int',
+		'mot_date' => 'date',
 		'purch_date' => 'date',
 		'start_date' => 'date',
 		'expiry_date' => 'date',
