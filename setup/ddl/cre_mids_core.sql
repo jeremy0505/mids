@@ -262,6 +262,8 @@ CREATE TABLE IF NOT EXISTS `mids`.`item_types` (
   `mfr_label` VARCHAR(80) NULL,
   `show_model_name` VARCHAR(1) NULL,
   `model_name_label` VARCHAR(80) NULL,
+  `show_colour` VARCHAR(1) NULL,
+  `colour_label` VARCHAR(80) NULL,
   `show_serial_number` VARCHAR(1) NULL,
   `serial_number_label` VARCHAR(80) NULL,
   `show_reg_date` VARCHAR(1) NULL,
@@ -436,6 +438,7 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   `retailer` VARCHAR(240) NULL,
   `mfr` VARCHAR(240) NULL DEFAULT NULL,
   `model_name` VARCHAR(240) NULL DEFAULT NULL,
+  `colour` VARCHAR(80) NULL,
   `serial_number` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Can be an item serial number or vehicle registration number.',
   `reg_date` DATE NULL COMMENT 'For vehicles only',
   `purch_date` DATE NULL DEFAULT NULL,
@@ -847,6 +850,8 @@ CREATE TABLE IF NOT EXISTS `mids`.`stage_item_types` (
   `mfr_label` VARCHAR(80) NULL,
   `show_model_name` VARCHAR(1) NULL,
   `model_name_label` VARCHAR(80) NULL,
+  `show_colour` VARCHAR(1) NULL,
+  `colour_label` VARCHAR(80) NULL,
   `show_serial_number` VARCHAR(1) NULL,
   `serial_number_label` VARCHAR(80) NULL,
   `show_reg_date` VARCHAR(1) NULL,
@@ -1009,7 +1014,8 @@ CREATE TABLE IF NOT EXISTS `mids`.`sample_my_items` (
   `purch_date` DATE NULL,
   `cost_initial` INT NULL,
   `val_now` INT NULL,
-  `serial_number` VARCHAR(80) NULL)
+  `serial_number` VARCHAR(80) NULL,
+  `colour` VARCHAR(80) NULL)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -1018,7 +1024,7 @@ USE `mids` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `mids`.`v_my_items`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `retailer` INT, `mfr` INT, `model_name` INT, `serial_number` INT, `reg_date` INT, `purch_date` INT, `purchase_type` INT, `start_date` INT, `expiry_date` INT, `cost_initial` INT, `cost_recurring` INT, `cost_recurring_freq` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `sample_flag` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT, `cat_name` INT, `cat_system_type` INT, `item_type_code` INT, `cat_user_type` INT, `item_type_name` INT, `access_mode` INT);
+CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `retailer` INT, `mfr` INT, `model_name` INT, `colour` INT, `serial_number` INT, `reg_date` INT, `purch_date` INT, `purchase_type` INT, `start_date` INT, `expiry_date` INT, `cost_initial` INT, `cost_recurring` INT, `cost_recurring_freq` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `sample_flag` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT, `cat_name` INT, `cat_system_type` INT, `item_type_code` INT, `cat_user_type` INT, `item_type_name` INT, `access_mode` INT);
 SHOW WARNINGS;
 
 -- -----------------------------------------------------

@@ -1,14 +1,14 @@
-﻿item_code, cost ,cost_basis,start_date,expiry_date,mfr,model_name,purch_date,price_paid,val_now,serial_number
-VIDEO_STREAM,4.99,MONTH,2022-02-01,\N,ITV Hub,\N,\N,\N,\N,\N
-VIDEO_STREAM,6.99,MONTH,2021-03-01,\N,Amazon Prime,\N,\N,\N,\N,\N
-VIDEO_STREAM,7.5,MONTH,2019-12-01,\N,Netflix,\N,\N,\N,\N,\N
-VIDEO_STREAM,4.99,MONTH,2022-04-01,\N,Apple TV,\N,\N,\N,\N,\N
-MUSIC_STREAM,9.99,MONTH,2015-04-01,\N,Spotify,\N,\N,\N,\N,\N
-CLOUD,0.79,MONTH,2015-03-01,\N,iCloud,\N,\N,\N,\N,\N
-BROADBAND,34,MONTH,2022-03-01,\N,Vodafone,\N,\N,\N,\N,\N
-MOBILE_PHONE_SUB,22,MONTH,2020-02-01,\N,EE,\N,\N,\N,\N,\N
-VIDEO_STREAM,12.5,MONTH,2010-10-01,\N,Sky TV,\N,\N,\N,\N,\N
-SAAS,79,YEAR,2021-07-01,\N,Office 365,\N,\N,\N,\N,\N
-CAR,115,MONTH,2022-01-01,\N,Vauxhall,Astra,2022-01-01,2500,\N,\N
-CARINS,250,YEAR,2022-01-01,\N,Admiral,\N,\N,\N,\N,ADM123456-ZZ
-CAR,95,MONTH,2020-01-01,\N,Ford,Focus,2020-01-01,17000,\N,AB18 ABC
+﻿item_code, cost ,cost_basis,start_date,expiry_date,mfr,model_name,purch_date,price_paid,val_now,serial_number,colour
+VIDEO_STREAM,4.99,MONTH,2022-02-01,\N,ITV Hub,\N,\N,\N,\N,\N,\N
+VIDEO_STREAM,6.99,MONTH,2021-03-01,\N,Amazon Prime,\N,\N,\N,\N,\N,\N
+VIDEO_STREAM,7.5,MONTH,2019-12-01,\N,Netflix,\N,\N,\N,\N,\N,\N
+VIDEO_STREAM,4.99,MONTH,2022-04-01,\N,Apple TV,\N,\N,\N,\N,\N,\N
+MUSIC_STREAM,9.99,MONTH,2015-04-01,\N,Spotify,\N,\N,\N,\N,\N,\N
+CLOUD,0.79,MONTH,2015-03-01,\N,iCloud,\N,\N,\N,\N,\N,\N
+BROADBAND,34,MONTH,2022-03-01,\N,Vodafone,\N,\N,\N,\N,\N,\N
+MOBILE_PHONE_SUB,22,MONTH,2020-02-01,\N,EE,\N,\N,\N,\N,\N,\N
+VIDEO_STREAM,12.5,MONTH,2010-10-01,\N,Sky TV,\N,\N,\N,\N,\N,\N
+SAAS,79,YEAR,2021-07-01,\N,Office 365,\N,\N,\N,\N,\N,\N
+CAR,115,MONTH,2022-01-01,\N,Vauxhall,Astra,2022-01-01,2500,\N,\N,Blue
+CARINS,250,YEAR,2022-01-01,\N,Admiral,\N,\N,\N,\N,ADM123456-ZZ,\N
+CAR,95,MONTH,2020-01-01,\N,Ford,Focus,2020-01-01,17000,\N,AB18 ABC,Red
