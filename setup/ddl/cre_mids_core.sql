@@ -262,16 +262,24 @@ CREATE TABLE IF NOT EXISTS `mids`.`item_types` (
   `mfr_label` VARCHAR(80) NULL,
   `show_model_name` VARCHAR(1) NULL,
   `model_name_label` VARCHAR(80) NULL,
-  `show_serial` VARCHAR(1) NULL,
-  `serial_label` VARCHAR(80) NULL,
+  `show_serial_number` VARCHAR(1) NULL,
+  `serial_number_label` VARCHAR(80) NULL,
+  `show_reg_date` VARCHAR(1) NULL,
+  `reg_date_label` VARCHAR(80) NULL,
   `show_purch_date` VARCHAR(1) NULL,
   `purch_date_label` VARCHAR(80) NULL,
+  `show_purchase_type` VARCHAR(1) NULL,
+  `purchase_type_label` VARCHAR(80) NULL,
   `show_start_date` VARCHAR(1) NULL,
   `start_date_label` VARCHAR(80) NULL,
   `show_expiry_date` VARCHAR(1) NULL,
   `expiry_date_label` VARCHAR(80) NULL,
-  `show_price_paid` VARCHAR(1) NULL,
-  `price_paid_label` VARCHAR(80) NULL,
+  `show_cost_initial` VARCHAR(1) NULL,
+  `cost_initial_label` VARCHAR(80) NULL,
+  `show_cost_recurring` VARCHAR(1) NULL,
+  `cost_recurring_label` VARCHAR(80) NULL,
+  `show_cost_recurring_freq` VARCHAR(1) NULL,
+  `cost_recurring_freq_label` VARCHAR(45) NULL,
   `show_val_now` VARCHAR(1) NULL,
   `val_now_label` VARCHAR(80) NULL,
   `show_val_now_eff_date` VARCHAR(1) NULL,
@@ -423,15 +431,20 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   `date_effective_from` DATE NOT NULL,
   `date_effective_to` DATE NULL,
   `insured_by_my_item_id` BIGINT UNSIGNED NULL COMMENT 'Link back to another row on this table which indicates the insurance policy that is covering this item\n',
-  `name` VARCHAR(240) NULL DEFAULT NULL,
+  `name` VARCHAR(240) NULL DEFAULT NULL COMMENT 'The nae you a user assigns to an item',
   `qty` INT NULL,
-  `model_name` VARCHAR(240) NULL DEFAULT NULL,
+  `retailer` VARCHAR(240) NULL,
   `mfr` VARCHAR(240) NULL DEFAULT NULL,
-  `serial_number` VARCHAR(45) NULL DEFAULT NULL,
+  `model_name` VARCHAR(240) NULL DEFAULT NULL,
+  `serial_number` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Can be an item serial number or vehicle registration number.',
+  `reg_date` DATE NULL COMMENT 'For vehicles only',
   `purch_date` DATE NULL DEFAULT NULL,
+  `purchase_type` VARCHAR(10) NULL COMMENT 'OUTRIGHT / LEASE / HP / LOAN\n',
   `start_date` DATE NULL,
   `expiry_date` DATE NULL DEFAULT NULL,
-  `price_paid` INT NULL DEFAULT NULL,
+  `cost_initial` INT NULL DEFAULT NULL,
+  `cost_recurring` INT NULL,
+  `cost_recurring_freq` VARCHAR(45) NULL COMMENT 'M / Y\n',
   `val_now` INT NULL,
   `val_now_eff_date` DATE NULL,
   `val_basis` VARCHAR(30) NULL,
@@ -440,11 +453,6 @@ CREATE TABLE IF NOT EXISTS `mids`.`my_items` (
   `status` VARCHAR(30) NOT NULL COMMENT 'ACTIVE\\nEXPIRED\\nDISPOSED\\n\n\nThis may not be required.',
   `property_room_id` BIGINT UNSIGNED NULL DEFAULT NULL,
   `num_days_pre_exp_notifs` INT NULL COMMENT 'How many days in advance of the expiry of a service should reminders be sent (default can be overridden on items)\n',
-  `subs_plan_name` VARCHAR(240) NULL,
-  `subs_plan_start` DATETIME NULL,
-  `subs_plan_end` DATETIME NULL,
-  `subs_plan_cost` INT NULL,
-  `subs_plan_cost_basis` VARCHAR(30) NULL,
   `sample_flag` VARCHAR(1) NULL COMMENT 'Used for tracking data that is not entered by the user - demo / sample data',
   `cre_date` DATETIME NOT NULL DEFAULT now(),
   `cre_user_id` BIGINT UNSIGNED NULL,
@@ -804,7 +812,8 @@ SHOW WARNINGS;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mids`.`stage_room_types` (
   `code` VARCHAR(30) NOT NULL,
-  `name` VARCHAR(80) NOT NULL)
+  `name` VARCHAR(80) NOT NULL,
+  `seq` INT NULL)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -838,16 +847,24 @@ CREATE TABLE IF NOT EXISTS `mids`.`stage_item_types` (
   `mfr_label` VARCHAR(80) NULL,
   `show_model_name` VARCHAR(1) NULL,
   `model_name_label` VARCHAR(80) NULL,
-  `show_serial` VARCHAR(1) NULL,
-  `serial_label` VARCHAR(80) NULL,
+  `show_serial_number` VARCHAR(1) NULL,
+  `serial_number_label` VARCHAR(80) NULL,
+  `show_reg_date` VARCHAR(1) NULL,
+  `reg_date_label` VARCHAR(80) NULL,
   `show_purch_date` VARCHAR(1) NULL,
   `purch_date_label` VARCHAR(80) NULL,
+  `show_purchase_type` VARCHAR(1) NULL,
+  `purchase_type_label` VARCHAR(80) NULL,
   `show_start_date` VARCHAR(1) NULL,
   `start_date_label` VARCHAR(80) NULL,
   `show_expiry_date` VARCHAR(1) NULL,
   `expiry_date_label` VARCHAR(80) NULL,
-  `show_price_paid` VARCHAR(1) NULL,
-  `price_paid_label` VARCHAR(80) NULL,
+  `show_cost_initial` VARCHAR(1) NULL,
+  `cost_initial_label` VARCHAR(80) NULL,
+  `show_cost_recurring` VARCHAR(1) NULL,
+  `cost_recurring_label` VARCHAR(80) NULL,
+  `show_cost_recurring_freq` VARCHAR(1) NULL,
+  `cost_recurring_freq_label` VARCHAR(45) NULL,
   `show_val_now` VARCHAR(1) NULL,
   `val_now_label` VARCHAR(80) NULL,
   `show_val_now_eff_date` VARCHAR(1) NULL,
@@ -1001,7 +1018,7 @@ USE `mids` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `mids`.`v_my_items`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `cat_name` INT, `cat_system_type` INT, `item_type_code` INT, `cat_user_type` INT, `item_type_name` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `model_name` INT, `mfr` INT, `serial_number` INT, `purch_date` INT, `start_date` INT, `expiry_date` INT, `price_paid` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT, `access_mode` INT);
+CREATE TABLE IF NOT EXISTS `mids`.`v_my_items` (`my_item_id` INT, `item_type_id` INT, `user_id` INT, `my_property_id` INT, `client_id` INT, `version` INT, `date_effective_from` INT, `date_effective_to` INT, `insured_by_my_item_id` INT, `name` INT, `qty` INT, `retailer` INT, `mfr` INT, `model_name` INT, `serial_number` INT, `reg_date` INT, `purch_date` INT, `purchase_type` INT, `start_date` INT, `expiry_date` INT, `cost_initial` INT, `cost_recurring` INT, `cost_recurring_freq` INT, `val_now` INT, `val_now_eff_date` INT, `val_basis` INT, `contact_phone` INT, `comments` INT, `status` INT, `property_room_id` INT, `num_days_pre_exp_notifs` INT, `sample_flag` INT, `cre_date` INT, `cre_user_id` INT, `upd_date` INT, `upd_user_id` INT, `cat_name` INT, `cat_system_type` INT, `item_type_code` INT, `cat_user_type` INT, `item_type_name` INT, `access_mode` INT);
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
@@ -1013,7 +1030,7 @@ SHOW WARNINGS;
 -- -----------------------------------------------------
 -- Placeholder table for view `mids`.`v_my_items_summary`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mids`.`v_my_items_summary` (`count_items` INT, `sum_subs_plan_cost` INT, `reporting_category` INT, `user_id` INT);
+CREATE TABLE IF NOT EXISTS `mids`.`v_my_items_summary` (`count_items` INT, `sum_cost_recurring` INT, `reporting_category` INT, `user_id` INT);
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
@@ -1023,41 +1040,12 @@ DROP TABLE IF EXISTS `mids`.`v_my_items`;
 SHOW WARNINGS;
 USE `mids`;
 CREATE or replace VIEW `v_my_items` AS 
-select my_item_id,
-    mi.item_type_id,
-    mi.user_id,
-    my_property_id,
-    mi.client_id,
-    version,
-    date_effective_from,
-    date_effective_to,
+select mi.*,
     cat.name cat_name, 
     cat.system_type cat_system_type, 
     it.code item_type_code, 
     cat.user_type cat_user_type, 
     it.name item_type_name,
-    insured_by_my_item_id,
-    mi.name,
-    qty,
-    model_name,
-    mfr,
-    serial_number,
-    purch_date,
-    start_date,
-    expiry_date,
-    price_paid,
-    val_now,
-    val_now_eff_date,
-    val_basis,
-    contact_phone,
-    comments,
-    status,
-    property_room_id,
-    num_days_pre_exp_notifs,
-    mi.cre_date,
-    mi.cre_user_id,
-    mi.upd_date,
-    mi.upd_user_id,
     'FULL' access_mode
 from my_items mi,
 item_types it, 
@@ -1093,7 +1081,7 @@ SHOW WARNINGS;
 USE `mids`;
 CREATE or replace VIEW `v_my_items_summary` AS
 select count(my_items.my_item_id) count_items, 
-       ifnull(sum(subs_plan_cost),0) sum_subs_plan_cost, 
+       ifnull(sum(cost_recurring),0) sum_cost_recurring, 
 case categories.system_type
 when 'SUBS_DIGI_ADMIN' then 'CLOUD'
   when 'SUBS_DIGI_ENT' then 'ENTERTAINMENT'
