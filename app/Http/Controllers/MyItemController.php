@@ -123,14 +123,14 @@ class MyItemController extends Controller
 
             DB::insert("insert into my_items 
                         (item_type_id, user_id,my_property_id, client_id, status, version, date_effective_from,name,mfr,serial_number,model_name, 
-                        cost_initial, val_now, purch_date, start_date, expiry_date,cost_recurring,cost_recurring_freq,colour, sample_flag)
+                        cost_initial, val_now, purch_date, start_date, expiry_date,cost_recurring,cost_recurring_freq,colour, mileage, mot_date, sample_flag)
                         select it.item_type_id, '$user->id', 
                         mp.my_property_id,
                         0,
                         'ACTIVE',
                         1, 
                         curdate(),mfr, 
-                        mfr,serial_number,model_name,cost_initial, val_now,purch_date,start_date,expiry_date,cost_recurring,cost_recurring_freq,colour, 'Y'
+                        mfr,serial_number,model_name,cost_initial, val_now,purch_date,start_date,expiry_date,cost_recurring,cost_recurring_freq,colour, mileage, mot_date, 'Y'
                         from sample_my_items smy, item_types it, my_properties mp
                         where smy.item_code = it.code
                         and   mp.user_id = '$user->id'");

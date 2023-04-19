@@ -46,3 +46,10 @@ drop table if exists suggested_items;
 drop view if exists v_my_items;
 drop view if exists v_my_property_rooms;
 
+
+
+
+
+// clean up
+
+delete from personal_access_tokens;
