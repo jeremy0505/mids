@@ -34,19 +34,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/item_summary_counts', [MyItemController::class, 'item_summary_counts']);
     Route::post('/textin', [AuthController::class, 'textin']);
     Route::post('/makesampleitems', [MyItemController::class, 'createsample']);
+    Route::get('myitems/{systype}', function ($systype) {
+        return MyItem::item_basic_data($systype);
+    });
 });
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-
-Route::get('myitems/{systype}', function ($systype) {
-
-    // If the Content-Type and Accept headers are set to 'application/json', 
-    // this will return a JSON structure. This will be cleaned up later.
-
-    return MyItem::item_basic_data($systype);
-})->middleware('auth:sanctum');
 
 // END
 // <----------------------

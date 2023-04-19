@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Base\MyItem as BaseMyItem;
 use Illuminate\Support\Facades\DB;
 
@@ -44,28 +45,15 @@ class MyItem extends BaseMyItem
 
 	static function item_basic_data($systype)
 	{
-		//return(MyItem::select('user_id','mfr','name')->where('user_id','=',$userid));
-
-		// $catid = DB::table('categories')
-		// -> select('category_id')
-		// -> where ('system_type' ,$systype)
-		// -> get();
-
-		// return $catid;
 
 
-		// 	return (DB::table('my_items')
-		//         ->select('mfr', 'name','model_name','serial_number','price_paid')
-		// 		->where ('category_id','=',$catid)
-		//         ->get());
-		// }
+		$user = Auth::user();
 
 
-		return (DB::table('my_items')
-			->join('item_types', 'item_types.item_type_id', '=', 'my_items.item_type_id')
-			->join('categories', 'categories.category_id', '=', 'item_types.category_id')
-			->select('mfr', 'my_items.name', 'model_name', 'serial_number', 'price_paid')
-			->where('categories.system_type', '=', strtoupper($systype))
+		return (DB::table('v_my_items')
+			->select('*')
+			->where('cat_system_type', '=', strtoupper($systype))
+			->where('user_id', $user->id)
 			->get());
 	}
 }
