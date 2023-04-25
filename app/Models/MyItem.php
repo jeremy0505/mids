@@ -43,17 +43,4 @@ class MyItem extends BaseMyItem
 		'upd_user_id'
 	];
 
-	static function item_basic_data($systype)
-	{
-
-
-		$user = Auth::user();
-
-
-		return (DB::table('v_my_items')
-			->select('*')
-			->where('cat_system_type', '=', strtoupper($systype))
-			->where('user_id', $user->id)
-			->get());
-	}
 }
