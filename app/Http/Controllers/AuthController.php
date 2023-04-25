@@ -32,14 +32,31 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'first_name' => 'required|string|max:80',
+            'last_name' => 'required|string|max:80',
+            'country' => 'required|string|max:2',
+            'currency' => 'required|string|max:3',
+            'year_of_birth' => 'required|int',
+            'postal_code' => 'required|string|max:15',
+
         ]);
+
+
+        
 
         // creates the user record in the database 
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']), // can also use bcrypt - but same underlying code is executed
-        ]);
+            'first_name' => $validatedData['first_name'],
+            'last_name' => $validatedData['last_name'],
+            'country' => $validatedData['country'],
+            'currency' => $validatedData['currency'],
+            'year_of_birth' => $validatedData['year_of_birth'],
+            'postal_code' => $validatedData['postal_code'],
+            ]);
+
 
         // generate the access token
         $token = $user->createToken('auth_token')->plainTextToken; // the name 'auth_token' appears to be insignificant 
@@ -153,7 +170,7 @@ class AuthController extends Controller
         $url = 'https://api.oneai.com/api/v0/pipeline';
         $api_key = 'd777c079-8613-4aab-ada0-a4b1ef513b6e';
 
-        $data = '{
+        $validatedData = '{
             "input": "[[TEXT]]",
             "steps": [
               {
@@ -163,8 +180,8 @@ class AuthController extends Controller
               }       ]
         }';
 
-        $data = str_replace('[[TEXT]]', $text, $data); // strip trailing newlines
-        $data = preg_replace('/[[:cntrl:]]/', ' ', $data);  // replace all control characters 
+        $validatedData = str_replace('[[TEXT]]', $text, $validatedData); // strip trailing newlines
+        $validatedData = preg_replace('/[[:cntrl:]]/', ' ', $validatedData);  // replace all control characters 
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -177,7 +194,7 @@ class AuthController extends Controller
             "api-key: $api_key",
         );
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $validatedData);
 
         $oneairesp = curl_exec($curl);
         curl_close($curl);
@@ -263,7 +280,7 @@ class AuthController extends Controller
 
 
 
-function outputRecursive($data)
+function outputRecursive($validatedData)
 {
     global $i;
     global $index;
@@ -271,7 +288,7 @@ function outputRecursive($data)
     global $valsarr;
 
 
-    foreach ($data as $key => $value) {
+    foreach ($validatedData as $key => $value) {
 
 
         $i = $i + 1;
