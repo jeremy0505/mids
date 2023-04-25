@@ -6,7 +6,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MyItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\MyItem;
 
 
 /*
@@ -35,7 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/textin', [AuthController::class, 'textin']);
     Route::post('/makesampleitems', [MyItemController::class, 'createsample']);
     Route::get('myitems/{systype}', function ($systype) {
-        return MyItem::item_basic_data($systype);
+        return MyItemController::item_basic_data($systype);
     });
 });
 
