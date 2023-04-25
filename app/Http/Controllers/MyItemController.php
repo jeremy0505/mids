@@ -238,4 +238,19 @@ class MyItemController extends Controller
 
         return $finarray;
     }
+
+	static function item_basic_data($systype)
+	{
+
+
+		$user = Auth::user();
+
+
+		return (DB::table('v_my_items')
+			->select(DB::raw('*,concat(mids.mfr_strip(mfr), ".png") mfr_logo'))
+			->where('cat_system_type', '=', strtoupper($systype))
+			->where('user_id', $user->id)
+			->get());
+	}
+
 }
