@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class AuthController extends Controller
@@ -126,9 +127,9 @@ class AuthController extends Controller
     public function perdulog(Request $request)
     {
 
-        //DB::insert('insert into perdu_log (type,subtype,details) values (?, ?, ?)', [$request['type'], $request['subtype'],$request['description']]);
+        DB::insert('insert into perdu_log (type,subtype,details) values (?, ?, ?)', [$request['type'], $request['subtype'],$request['description']]);
 
-        return ['type' => $request['type'], 'subtype' => $request['subtype']];
+        // return ['type' => $request['type'], 'subtype' => $request['subtype']];
 
     }
 
