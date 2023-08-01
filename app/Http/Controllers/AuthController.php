@@ -126,8 +126,8 @@ class AuthController extends Controller
     public function perdulog(Request $request)
     {
 
-        return $request;
-    
+        return ['status' => 'OK', 'message' => 'Item records created OK'];
+            
     }
 
 
