@@ -34,7 +34,7 @@ class AuthController extends Controller
         ]);
 
 
-        
+
 
         // creates the user record in the database 
         $user = User::create([
@@ -47,7 +47,7 @@ class AuthController extends Controller
             'currency' => $validatedData['currency'],
             'year_of_birth' => $validatedData['year_of_birth'],
             'postal_code' => $validatedData['postal_code'],
-            ]);
+        ]);
 
 
         // generate the access token
@@ -119,25 +119,21 @@ class AuthController extends Controller
     }
 
 
-        //------------------------------------------------------------------------------------------------
-    // LOGIN
+    //------------------------------------------------------------------------------------------------
+    // PERDU - APIS
 
 
 
     public function perdulog(Request $request)
     {
 
-        DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$request['type'], $request['subtype'],$request['description']]);
+        DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$request['type'], $request['subtype'], $request['description']]);
 
-        return ['type' => $request['type'], 'subtype' => $request['subtype'],$request['details']];
-
+        return ['type' => $request['type'], 'subtype' => $request['subtype'], $request['details']];
     }
 
+    public function perdustats(Request $request)
+    {
 
-}
-
-
-
-
-
-
+        return ['number' => '17'];
+    }}
