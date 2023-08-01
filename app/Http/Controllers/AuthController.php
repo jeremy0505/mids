@@ -129,7 +129,7 @@ class AuthController extends Controller
 
         DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$request['type'], $request['subtype'],$request['description']]);
 
-        // return ['type' => $request['type'], 'subtype' => $request['subtype']];
+        return ['type' => $request['type'], 'subtype' => $request['subtype'],$request['details']];
 
     }
 
