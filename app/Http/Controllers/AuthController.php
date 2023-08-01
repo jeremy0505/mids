@@ -118,6 +118,19 @@ class AuthController extends Controller
     }
 
 
+        //------------------------------------------------------------------------------------------------
+    // LOGIN
+
+
+
+    public function perdulog(Request $request)
+    {
+
+        return $request;
+    
+    }
+
+
 }
 
 
