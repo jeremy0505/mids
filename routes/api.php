@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/perdulog', [AuthController::class, 'perdulog']);
+Route::post('/perdu/log', [AuthController::class, 'perdulog']);
 
 
 // END
