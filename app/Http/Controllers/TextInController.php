@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 
 $index = -1;
 $keysarr = array();
 $valsarr = array();
 
-
-//$elements = array ('name'); // this could equally be a string - but using an array so that we can extend it later
-
-// comment line to test 
 
 class TextInController extends Controller
 {
@@ -32,6 +31,9 @@ class TextInController extends Controller
         $finarray = array();
         $finsub = 0;
         $sub = 0;
+
+        $user = Auth::user();
+
 
         // Odd thing here - if I define the $elements outside and refer to it here 
         // via "global" I cannot actually use it in the later code - this is different behaviour compared to running 
@@ -162,9 +164,100 @@ class TextInController extends Controller
         $json_out['oneai_response'] = json_decode($oneairesp);
 
 
-        return [($json_out), 200];
+        // at this point we have a set of structured data that we can either return to the client
+        // or process further ourselves - we want to create the relevant my_items records based on this
+        // data - the assembly of the data into a json structure was an early development. We will
+        // retain the json structure in case we want to reorgainse the code later. But we'll re-process the 
+        // array data now to create records in my_items and then we will return a status message to the client.
+
+        for ($i = 0; $i < $finsub; $i++) {
+   
+
+            $col_org = $finarray[$i]['org'];
+            $col_date = $finarray[$i]['date'];
+            $col_money = $finarray[$i]['money'];
+            $col_duration = $finarray[$i]['duration'];
+
+            if (str_contains(strtolower($col_duration),'month'))
+              $col_duration = 'M';
+            else
+              $col_duration = 'Y';
+              
+
+            $sql_response = DB::insert("insert into my_items 
+                        (item_type_id, 
+                        user_id,
+                        my_property_id, 
+                        client_id, 
+                        status, 
+                        version, 
+                        date_effective_from,
+                        name,
+                        mfr,
+                        serial_number,
+                        model_name, 
+                        cost_initial, 
+                        val_now, 
+                        purch_date, 
+                        start_date, 
+                        expiry_date,
+                        cost_recurring,
+                        cost_recurring_freq,
+                        colour, 
+                        mileage, 
+                        mot_date, 
+                        sample_flag)
+                        select it.item_type_id, 
+                        '$user->id', 
+                        mp.my_property_id,
+                        0,
+                        'ACTIVE',
+                        1, 
+                        curdate(),
+                        '$col_org', 
+                        null, 
+                        '$col_org',
+                        null,
+                        null, 
+                        null,
+                        null,
+                        null, 
+                        null,
+                        '$col_money', 
+                        '$col_duration', 
+                        null, 
+                        null, 
+                        null, 
+                        'N'
+                        from item_types it, 
+                             my_properties mp
+                        where it.code='VIDEO_STREAM'
+                        and  mp.user_id = '$user->id'
+                        and not exists (select 0
+                                        from   my_items mi2
+                                        where  mi2.user_id = '$user->id'
+                                        and    mi2.mfr = '$col_org')");  
+        //   echo 'main $sql_response=' . $sql_response . PHP_EOL;
+
+        //   $sql_response = DB::raw("select count(*) cnt f
+        //                               from   my_items mi2
+        //   where  mi2.user_id = '$user->id'
+        //   and    mi2.mfr = '$col_org'");
+
+     
+                     
+        }
+
+        
+        return ['status' => 'OK', 'message' => 'Item records created OK'];
+
+        // return [($json_out), 200];
     }
 }
+
+
+//------------------------------------------------------------------------------------------------
+// OUTPUTRECURSIVE
 
 function outputRecursive($validatedData)
 {
@@ -208,6 +301,9 @@ function outputRecursive($validatedData)
     }
 }
 
+
+//------------------------------------------------------------------------------------------------
+// FINDNEXT
 
 function findnext($labels, $values, $what, $index)
 {
