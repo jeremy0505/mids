@@ -136,5 +136,7 @@ class AuthController extends Controller
     {
 
         $c = DB::raw('select count(*) from perdulog');
+
+        $c = DB::table('perdulog')->count();
         return ['number' => $c];
     }}
