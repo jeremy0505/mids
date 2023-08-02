@@ -135,5 +135,6 @@ class AuthController extends Controller
     public function perdustats(Request $request)
     {
 
-        return ['number' => '17'];
+        $c = DB::raw('select count(*) from perdulog');
+        return ['number' => $c];
     }}
