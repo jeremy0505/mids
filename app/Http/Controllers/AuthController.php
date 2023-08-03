@@ -137,6 +137,7 @@ class AuthController extends Controller
     public function perdustats(Request $request)
     {
 
+        perduins('QUERY','STATS','');
         $c = DB::raw('select count(*) from perdulog');
 
         $c = DB::table('perdulog')->count();
