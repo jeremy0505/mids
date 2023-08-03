@@ -141,7 +141,9 @@ class AuthController extends Controller
         $c = DB::raw('select count(*) from perdulog');
 
         $c = DB::table('perdulog')->count();
-        return ['number' => $c];
+
+        return url('/');
+        // return ['number' => $c];
     }
 
 
@@ -150,6 +152,7 @@ class AuthController extends Controller
 function perduins($type, $subtype, $description)
 
 {
+    // simply log in the database what's been requested
 
     DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$type, $subtype, $description]);
 
