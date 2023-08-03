@@ -137,7 +137,8 @@ class AuthController extends Controller
     public function perdustats(Request $request)
     {
 
-        $sqlcode = perduins('QUERY','STATS',null);
+        $sqlcode = perduins('QUERY','STATS','');
+        //
 
         $c = DB::table('perdulog')->count();
 
@@ -151,7 +152,7 @@ function perduins($type, $subtype, $description)
     // simply log in the database what's been requested
 
     DB::insert('insert into perdulog (type,subtype,details,url) values (?, ?, ?, ?)', 
-               [$type, $subtype, $description], geturl());
+               [$type, $subtype, $description, geturl()]);
 }
 
 function geturl()
