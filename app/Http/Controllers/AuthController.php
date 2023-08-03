@@ -142,7 +142,7 @@ class AuthController extends Controller
 
         $c = DB::table('perdulog')->count();
 
-        return url();
+        return $_SERVER;
         // return ['number' => $c];
     }
 
