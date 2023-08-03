@@ -127,7 +127,9 @@ class AuthController extends Controller
     public function perdulog(Request $request)
     {
 
-        DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$request['type'], $request['subtype'], $request['description']]);
+        // DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$request['type'], $request['subtype'], $request['description']]);
+
+        $sqlcode = perduins($request['type'], $request['subtype'], $request['description']);
 
         return ['type' => $request['type'], 'subtype' => $request['subtype'], $request['details']];
     }
@@ -139,4 +141,16 @@ class AuthController extends Controller
 
         $c = DB::table('perdulog')->count();
         return ['number' => $c];
-    }}
+    }
+
+
+}
+
+function perduins($type, $subtype, $description)
+
+{
+
+    DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$type, $subtype, $description]);
+
+
+}
