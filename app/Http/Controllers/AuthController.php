@@ -142,11 +142,8 @@ class AuthController extends Controller
 
         $c = DB::table('perdulog')->count();
 
-        return $_SERVER;
-        // return ['number' => $c];
+        return ['number' => $c];
     }
-
-
 }
 
 function perduins($type, $subtype, $description)
@@ -154,7 +151,29 @@ function perduins($type, $subtype, $description)
 {
     // simply log in the database what's been requested
 
-    DB::insert('insert into perdulog (type,subtype,details) values (?, ?, ?)', [$type, $subtype, $description]);
+    DB::insert('insert into perdulog (type,subtype,details,url) values (?, ?, ?, ?)', 
+               [$type, $subtype, $description], geturl());
+}
+
+function geturl()
+{
+
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+        $link = "https";
+    else
+        $link = "http";
+
+    // Here append the common URL characters.
+    $link .= "://";
+
+    // Append the host(domain name, ip) to the URL.
+    $link .= $_SERVER['HTTP_HOST'];
+
+    // Append the requested resource location to the URL
+    $link .= $_SERVER['REQUEST_URI'];
+
+    // Print the link
 
 
+    return $link;
 }
